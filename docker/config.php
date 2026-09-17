@@ -667,6 +667,9 @@ return [
             # Enable login via Keycloak (true/false)
             'keycloak.login.enabled' => true,
 
+            # Logout URL Redirect
+            'logout.url' => 'http://localhost:8081/Web/',
+
             # Keycloak OAuth2 credentials
             'keycloak.url' => 'http://localhost:8082',
 
@@ -677,20 +680,20 @@ return [
             'keycloak.client.id' => 'librebooking',
 
             # Client secret for Keycloak OAuth login
-            'keycloak.client.secret' => 'z8s0KmrUXToV4kI5WSrqxnKeXA75I0kHog7UUPljbH3ymLtgUSFpz461GWCkht6qfu3TeF0IG609SHTH9wJ4Js',
+            'keycloak.client.secret' => '',
 
             # Redirect URI for Keycloak OAuth login
             'keycloak.client.uri' => '/Web/keycloak-auth.php?prompt=login',
 
             # Enable login via custom OAuth2 provider (true/false)
-            'oauth2.login.enabled' => true,
+            'oauth2.login.enabled' => false,
 
             # OAuth2 identity provider name (shown on login button)
             'oauth2.name' => 'OAuth2',
 
             # OAuth2 endpoint URLs and client credentials
             # If true, the configured authorize URL's trailing slash is removed (true/false)
-            'oauth2.strip.trailing.slash' => true,
+            'oauth2.strip.trailing.slash' => false,
 
             # Authorization URL for OAuth2 login
             'oauth2.url.authorize' => '',
