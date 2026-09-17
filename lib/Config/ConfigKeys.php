@@ -1,0 +1,1931 @@
+<?php
+
+require_once(ROOT_DIR . 'lib/Config/AbstractConfigKeys.php');
+
+class ConfigKeys extends AbstractConfigKeys
+{
+    // Application configuration
+
+    public const APP_TITLE = [
+        'key' => 'app.title',
+        'type' => 'string',
+        'default' => 'LibreBooking',
+        'label' => 'App title',
+        'description' => 'The title of the application displayed in the header and browser tab',
+        'config_file_comment' => 'The public name of the application',
+    ];
+    public const APP_DEBUG = [
+        'key' => 'app.debug',
+        'type' => 'boolean',
+        'default' => false,
+        'label' => 'Enable Debug Mode',
+        'description' => 'Enable or disable debug mode for the application',
+        'config_file_comment' => "Enable or disable debug mode for the application\nif enabled it will enable 'display_errors' and 'display_startup_errors'",
+    ];
+
+    public const ADMIN_EMAIL = [
+        'key' => 'admin.email',
+        'type' => 'string',
+        'default' => 'admin@example.com',
+        'label' => 'Administrator Email',
+        'description' => 'Administrator email address',
+    ];
+
+    public const ADMIN_EMAIL_NAME = [
+        'key' => 'admin.email.name',
+        'type' => 'string',
+        'default' => 'LB Administrator',
+        'label' => 'Administrator Display Name',
+        'description' => 'Display name used for outgoing admin emails',
+    ];
+
+    public const COMPANY_NAME = [
+        'key' => 'company.name',
+        'type' => 'string',
+        'default' => '',
+        'label' => 'Company Name',
+        'description' => 'Company name to show in the page header',
+    ];
+
+    public const COMPANY_URL = [
+        'key' => 'company.url',
+        'type' => 'string',
+        'default' => '',
+        'label' => 'Company URL',
+        'description' => 'URL to the company\'s website',
+    ];
+
+    // Language and Timezone
+    public const DEFAULT_TIMEZONE = [
+        'key' => 'default.timezone',
+        'type' => 'string',
+        'default' => 'Europe/London',
+        'label' => 'Default Timezone',
+        'description' => 'Look up here http://php.net/manual/en/timezones.php',
+        'config_file_comment' => "Default timezone.\nOptions: Look up here https://php.net/manual/en/timezones.php",
+    ];
+
+    # previously LANGUAGE
+    public const DEFAULT_LANGUAGE = [
+        'key' => 'default.language',
+        'type' => 'string',
+        'default' => 'en_us',
+        'label' => 'Default Language',
+        'description' => 'Default language for the application',
+        'config_file_comment' => "Default language.\nOptions: Find your language in the lang directory",
+    ];
+
+    public const ENABLED_LANGUAGES = [
+        'key' => 'enabled.languages',
+        'type' => 'string',
+        'default' => '',
+        'label' => 'Enabled Languages',
+        'description' => 'Comma-separated list of language codes to show in the language selector (e.g. "en_us,fr_fr,de_de"). Languages appear in the order listed. If empty, all supported languages are shown. Language codes must match those defined in lang/AvailableLanguages.php. If the value of default.language is not included in this list, the application will fall back to en_us and log an error.',
+        'config_file_comment' => "Restrict which languages appear in the language selector.\nComma-separated list of language codes (e.g. 'en_us,fr_fr,de_de').\nLanguages appear in the selector in the order listed.\nLeave empty to show all supported languages.\nLanguage codes must match those defined in lang/AvailableLanguages.php.\nIf the value of `default.language` is not included in this list, the\napplication will fall back to 'en_us' and log an error.",
+    ];
+
+    // Frontend
+
+    public const SCRIPT_URL = [
+        'key' => 'script.url',
+        'type' => 'string',
+        'default' => '',
+        'label' => 'Script URL',
+        'description' => 'Public URL to the Web directory of this instance',
+        'config_file_comment' => "Public URL to the Web directory of this instance\nThis is the URL that appears when you are logging in\nLeave http: or https: off to auto-detect",
+    ];
+
+    # previously INSTALLATION_PASSWORD
+    public const INSTALL_PASSWORD = [
+        'key' => 'install.password',
+        'type' => 'string',
+        'default' => '',
+        'label' => 'Installation Password',
+        'description' => 'Password required for installation or upgrades',
+        'config_file_comment' => "Password to access installation wizard under Web/install/\nLeave empty to disable the installation wizard",
+        'is_hidden' => true,
+    ];
+
+    public const CACHE_TEMPLATES = [
+        'key' => 'cache.templates',
+        'type' => 'boolean',
+        'default' => true,
+        'label' => 'Cache Templates',
+        'description' => 'Enable or disable template caching',
+        'config_file_comment' => 'Enable template caching. Recommended for production.',
+    ];
+
+    # previously USE_LOCAL_JS
+    public const USE_LOCAL_JS_LIBS = [
+        'key' => 'use.local.js.libs',
+        'legacy' => 'use.local.js',
+        'type' => 'boolean',
+        'default' => true,
+        'label' => 'Use Local Frontend Assets',
+        'description' => 'Use bundled/self-hosted frontend assets (JavaScript libraries, CSS, fonts) instead of CDN-hosted assets',
+        'config_file_comment' => 'Enable use of bundled/self-hosted frontend assets (JavaScript, CSS, fonts)',
+    ];
+
+    public const INACTIVITY_TIMEOUT = [
+        'key' => 'inactivity.timeout',
+        'type' => 'integer',
+        'default' => 30,
+        'label' => 'Inactivity Timeout',
+        'description' => 'Time in minutes before a user is logged out due to inactivity',
+        'config_file_comment' => 'Session inactivity timeout in minutes',
+    ];
+
+    public const HOME_URL = [
+        'key' => 'home.url',
+        'type' => 'string',
+        'default' => '',
+        'label' => 'Home URL',
+        'description' => 'URL to redirect users after login',
+        'config_file_comment' => 'Home URL linked to application logo in header',
+    ];
+
+    public const LOGOUT_URL = [
+        'key' => 'logout.url',
+        'type' => 'string',
+        'default' => '',
+        'label' => 'Logout URL',
+        'description' => 'URL to redirect users after logout',
+    ];
+
+    public const DEFAULT_HOMEPAGE = [
+        'key' => 'default.homepage',
+        'type' => 'integer',
+        'default' => 1,
+        'choices' => [
+            1 => 'Dashboard',
+            2 => 'Schedule',
+            3 => 'My Calendar',
+            4 => 'Resource Calendar'
+        ],
+        'label' => 'Default Homepage',
+        'description' => 'Default homepage for new users',
+        'config_file_comment' => "Default homepage to use when new users register\nOptions:  1 = Dashboard, 2 = Schedule, 3 = My Calendar, 4 = Resource Calendar",
+    ];
+
+    public const DEFAULT_PAGE_SIZE = [
+        'key' => 'default.page.size',
+        'type' => 'integer',
+        'default' => 50,
+        'label' => 'Default Page Size',
+        'description' => 'Default number of items per page in listings. Use a positive integer; -1 is not supported for performance reasons.',
+        'config_file_comment' => "Default number of items per page in listings\nUse a positive integer. -1 is not supported for performance reasons",
+    ];
+
+    public const CSS_EXTENSION_FILE = [
+        'key' => 'css.extension.file',
+        'type' => 'string',
+        'default' => '',
+        'label' => 'CSS Extension File',
+        'description' => 'Path to a custom CSS file to extend the default styles',
+        'config_file_comment' => 'Optional path to a custom CSS file',
+    ];
+
+    public const CSS_THEME = [
+        'key' => 'css.theme',
+        'type' => 'string',
+        'default' => 'default',
+        'choices' => [
+            'default' => 'Default',
+            'dimgray' => 'Dim Gray',
+            'dark_red' => 'Dark Red',
+            'dark_green' => 'Dark Green',
+            'french_blue' => 'French Blue',
+            'cake_blue' => 'Cake Blue',
+            'orange' => 'Orange'
+        ],
+        'label' => 'CSS Theme',
+        'description' => 'Theme to use for the application. Options: default, dimgray, dark_red, dark_green, french_blue, cake_blue, orange',
+        'config_file_comment' => "Name of the CSS theme to use\nOptions: default, dimgray, dark_red, dark_green, french_blue, cake_blue, orange",
+    ];
+
+    public const NAME_FORMAT = [
+        'key' => 'name.format',
+        'type' => 'string',
+        'default' => '{first} {last}',
+        'label' => 'Name Format',
+        'description' => 'Format for displaying user names',
+        'config_file_comment' => 'Display format when showing user names',
+    ];
+
+    # previously PAGES_ENABLE_CONFIGURATION
+    public const PAGES_CONFIGURATION_ENABLED = [
+        'key' => 'pages.configuration.enabled',
+        'legacy' => 'pages.enable.configuration',
+        'type' => 'boolean',
+        'default' => true,
+        'label' => 'Enable Configuration Page',
+        'description' => 'Enable or disable the configuration page in the admin panel',
+        'section' => 'pages'
+    ];
+
+    // Database
+    public const DATABASE_TYPE = [
+        'key' => 'database.type',
+        'type' => 'string',
+        'default' => 'mysql',
+        'label' => 'Database Type',
+        'description' => 'Type of database used by the application',
+        'config_file_comment' => 'Database configuration. Only MySQL is supported',
+        'section' => 'database'
+    ];
+
+    public const DATABASE_HOSTSPEC = [
+        'key' => 'database.hostspec',
+        'type' => 'string',
+        'default' => '127.0.0.1',
+        'label' => 'Database Host',
+        'description' => 'Hostname or IP address of the database server',
+        'config_file_comment' => 'Database host address or IP.',
+        'section' => 'database',
+        'is_private' => true
+    ];
+
+    public const DATABASE_NAME = [
+        'key' => 'database.name',
+        'type' => 'string',
+        'default' => 'librebooking',
+        'label' => 'Database Name',
+        'description' => 'Name of the database used by the application',
+        'config_file_comment' => 'Database name',
+        'section' => 'database'
+    ];
+
+    public const DATABASE_USER = [
+        'key' => 'database.user',
+        'type' => 'string',
+        'default' => 'lb_user',
+        'label' => 'Database User',
+        'description' => 'Username for connecting to the database',
+        'config_file_comment' => 'Database username with access to the librebooking database',
+        'section' => 'database',
+        'is_private' => true
+    ];
+
+    public const DATABASE_PASSWORD = [
+        'key' => 'database.password',
+        'type' => 'string',
+        'default' => 'password',
+        'label' => 'Database Password',
+        'description' => 'Password for connecting to the database',
+        'config_file_comment' => 'Database password for the user',
+        'section' => 'database',
+        'is_private' => true
+    ];
+
+    // Email Sending (PHPMailer)
+    public const PHPMAILER_MAILER = [
+        'key' => 'phpmailer.mailer',
+        'type' => 'string',
+        'default' => 'smtp',
+        'choices' => [
+            'mail' => 'mail',
+            'sendmail' => 'sendmail',
+            'smtp' => 'smtp'
+        ],
+        'label' => 'PHPMailer Mailer',
+        'description' => 'Mailer type to use for sending emails',
+        'config_file_comment' => "Mailer type:\nOptions: mail, smtp or sendmail",
+        'section' => 'phpmailer'
+    ];
+
+    public const PHPMAILER_SMTP_HOST = [
+        'key' => 'phpmailer.smtp.host',
+        'type' => 'string',
+        'default' => '',
+        'label' => 'SMTP Host',
+        'description' => 'SMTP server hostname',
+        'config_file_comment' => 'SMTP host address or IP',
+        'is_private' => true,
+        'section' => 'phpmailer'
+    ];
+
+    public const PHPMAILER_SMTP_PORT = [
+        'key' => 'phpmailer.smtp.port',
+        'type' => 'integer',
+        'default' => 25,
+        'label' => 'SMTP Port',
+        'description' => 'SMTP server port',
+        'config_file_comment' => 'SMTP port',
+        'section' => 'phpmailer'
+    ];
+
+    public const PHPMAILER_SMTP_SECURE = [
+        'key' => 'phpmailer.smtp.secure',
+        'type' => 'string',
+        'default' => '',
+        'choices' => [
+            '' => 'None',
+            'tls' => 'TLS',
+            'ssl' => 'SSL'
+        ],
+        'label' => 'SMTP Secure',
+        'description' => 'Encryption type for SMTP',
+        'config_file_comment' => "SMTP encryption\nOptions: tls, ssl",
+        'section' => 'phpmailer'
+    ];
+
+    public const PHPMAILER_SMTP_AUTOTLS = [
+        'key' => 'phpmailer.smtp.autotls',
+        'type' => 'boolean',
+        'default' => true,
+        'label' => 'SMTP AutoTLS',
+        'description' => 'If an unencrypted SMTP connection should attempt to use STARTTLS',
+        'config_file_comment' => 'SMTP Auto TLS, if an unencrypted SMTP connection should attempt to use STARTTLS',
+        'section' => 'phpmailer'
+    ];
+
+    public const PHPMAILER_SMTP_AUTH = [
+        'key' => 'phpmailer.smtp.auth',
+        'type' => 'boolean',
+        'default' => true,
+        'label' => 'SMTP Authentication',
+        'description' => 'Enable SMTP authentication',
+        'section' => 'phpmailer'
+    ];
+
+    public const PHPMAILER_SMTP_USERNAME = [
+        'key' => 'phpmailer.smtp.username',
+        'type' => 'string',
+        'default' => '',
+        'label' => 'SMTP Username',
+        'description' => 'Username for SMTP authentication',
+        'config_file_comment' => 'SMTP username',
+        'section' => 'phpmailer'
+    ];
+
+    public const PHPMAILER_SMTP_PASSWORD = [
+        'key' => 'phpmailer.smtp.password',
+        'type' => 'string',
+        'default' => '',
+        'label' => 'SMTP Password',
+        'description' => 'Password for SMTP authentication',
+        'config_file_comment' => 'SMTP password',
+        'section' => 'phpmailer',
+        'is_private' => true
+    ];
+
+    public const PHPMAILER_SENDMAIL_PATH = [
+        'key' => 'phpmailer.sendmail.path',
+        'type' => 'string',
+        'default' => '/usr/sbin/sendmail',
+        'label' => 'Sendmail Path',
+        'description' => 'Path to the sendmail binary',
+        'config_file_comment' => 'Path to sendmail binary',
+        'section' => 'phpmailer'
+    ];
+
+    public const PHPMAILER_SMTP_DEBUG = [
+        'key' => 'phpmailer.smtp.debug',
+        'type' => 'boolean',
+        'default' => false,
+        'label' => 'SMTP Debug Level',
+        'description' => 'Enable SMTP debug output',
+        'section' => 'phpmailer'
+    ];
+
+    // Email
+    # previously ENABLE_EMAIL
+    public const EMAIL_ENABLED = [
+        'key' => 'email.enabled',
+        'legacy' => 'enable.email',
+        'type' => 'boolean',
+        'default' => true,
+        'label' => 'Enable Email',
+        'description' => 'Enable or disable email notifications',
+        'section' => 'email'
+    ];
+
+    # previously ENFORCE_CUSTOM_MAIL_TEMPLATE
+    public const EMAIL_ENFORCE_CUSTOM_TEMPLATE = [
+        'key' => 'email.enforce.custom.template',
+        'legacy' => 'enforce.custom.mail.template',
+        'type' => 'boolean',
+        'default' => false,
+        'label' => 'Enforce Custom Email Template',
+        'description' => 'Force the use of a custom email template for all emails',
+        'config_file_comment' => 'Enable custom email templates',
+        'section' => 'email'
+    ];
+
+    # previously DEFAULT_FROM_ADDRESS
+    public const EMAIL_DEFAULT_FROM_ADDRESS = [
+        'key' => 'email.default.from.address',
+        'type' => 'string',
+        'default' => 'no-reply@example.com',
+        'label' => 'Default From Address',
+        'description' => 'Default email address for outgoing emails',
+        'config_file_comment' => 'Default email address to use for outgoing emails',
+        'section' => 'email'
+    ];
+
+    # previously DEFAULT_FROM_NAME
+    public const EMAIL_DEFAULT_FROM_NAME = [
+        'key' => 'email.default.from.name',
+        'type' => 'string',
+        'default' => 'LB',
+        'label' => 'Default From Name',
+        'description' => 'Default display name for outgoing emails',
+        'config_file_comment' => 'Default name to use for outgoing emails',
+        'section' => 'email'
+    ];
+
+    // Logging
+    public const LOGGING_FOLDER = [
+        'key' => 'logging.folder',
+        'type' => 'string',
+        'default' => '/var/log/librebooking/log',
+        'label' => 'Logging Folder',
+        'description' => 'Directory where log files are stored',
+        'config_file_comment' => "Directory where logs are stored\nWrite permission is required",
+        'section' => 'logging'
+    ];
+
+    public const LOGGING_LEVEL = [
+        'key' => 'logging.level',
+        'type' => 'string',
+        'default' => 'error',
+        'choices' => [
+            'none' => 'None',
+            'error' => 'error',
+            'debug' => 'debug',
+        ],
+        'label' => 'Logging Level',
+        'description' => 'Logging level: none, debug, error',
+        'section' => 'logging'
+    ];
+
+    public const LOGGING_SQL = [
+        'key' => 'logging.sql',
+        'type' => 'boolean',
+        'default' => false,
+        'label' => 'Log SQL Queries',
+        'description' => 'Enable or disable logging of SQL queries',
+        'config_file_comment' => 'Enable SQL logging',
+        'section' => 'logging'
+    ];
+
+    // Uploads
+    # previously IMAGE_UPLOAD_DIRECTORY
+    public const UPLOAD_IMAGE_DIRECTORY = [
+        'key' => 'uploads.image.upload.directory',
+        'legacy' => 'image.upload.directory',
+        'type' => 'string',
+        'default' => 'Web/uploads/images',
+        'label' => 'Image Upload Directory',
+        'description' => 'Directory for uploaded images',
+        'config_file_comment' => 'Full or relative path to where images will be stored',
+        'section' => 'uploads'
+    ];
+
+    # previously IMAGE_UPLOAD_URL
+    public const UPLOAD_IMAGE_URL = [
+        'key' => 'uploads.image.upload.url',
+        'legacy' => 'image.upload.url',
+        'type' => 'string',
+        'default' => 'uploads/images',
+        'label' => 'Image Upload URL',
+        'description' => 'URL path for uploaded images',
+        'config_file_comment' => 'full or relative path to show uploaded images from',
+        'section' => 'uploads'
+    ];
+
+    # previously UPLOAD_ENABLE_RESERVATION_ATTACHMENTS
+    public const UPLOAD_RESERVATION_ATTACHMENTS_ENABLED = [
+        'key' => 'uploads.reservation.attachments.enabled',
+        'legacy' => 'uploads.enable.reservation.attachments',
+        'type' => 'boolean',
+        'default' => false,
+        'label' => 'Enable Reservation Attachments',
+        'description' => 'Allow users to attach files to reservations',
+        'config_file_comment' => 'Enable reservation attachments',
+        'section' => 'uploads'
+    ];
+
+    # previously UPLOAD_RESERVATION_ATTACHMENTS
+    public const UPLOAD_RESERVATION_ATTACHMENT_PATH = [
+        'key' => 'uploads.reservation.attachment.path',
+        'type' => 'string',
+        'default' => 'uploads/reservation',
+        'label' => 'Reservation Attachment Path',
+        'description' => 'Directory for reservation attachments',
+        'config_file_comment' => 'Full or relative path to where reservation attachments will be stored',
+        'section' => 'uploads'
+    ];
+
+    # previously UPLOAD_RESERVATION_EXTENSIONS
+    public const UPLOAD_RESERVATION_ATTACHMENT_EXTENSIONS = [
+        'key' => 'uploads.reservation.attachment.extensions',
+        'type' => 'string',
+        'default' => 'csv,doc,docx,gif,jpeg,jpg,pdf,png,ppt,pptx,txt,xls,xlsx',
+        'label' => 'Allowed Attachment Extensions',
+        'description' => 'Comma-separated list of allowed file extensions for attachments',
+        'config_file_comment' => 'File extensions allowed for reservation attachments',
+        'section' => 'uploads'
+    ];
+
+    // Notification Settings for Reservations
+
+    # previously NOTIFY_CREATE_RESOURCE_ADMINS
+    public const RESERVATION_NOTIFY_APPLICATION_ADMIN_ADD = [
+        'key' => 'reservation.notify.application.admin.add',
+        'type' => 'boolean',
+        'default' => false,
+        'label' => 'Notify Application Admin on Reservation Add',
+        'description' => 'Send notification to application administrators when a reservation is created',
+        'section' => 'reservation.notify'
+    ];
+    # previously NOTIFY_UPDATE_APPLICATION_ADMINS
+    public const RESERVATION_NOTIFY_APPLICATION_ADMIN_UPDATE = [
+        'key' => 'reservation.notify.application.admin.update',
+        'type' => 'boolean',
+        'default' => false,
+        'label' => 'Notify Application Admin on Reservation Update',
+        'description' => 'Send notification to application administrators when a reservation is updated',
+        'section' => 'reservation.notify'
+    ];
+    # previously NOTIFY_DELETE_APPLICATION_ADMINS
+    public const RESERVATION_NOTIFY_APPLICATION_ADMIN_DELETE = [
+        'key' => 'reservation.notify.application.admin.delete',
+        'type' => 'boolean',
+        'default' => false,
+        'label' => 'Notify Application Admin on Reservation Delete',
+        'description' => 'Send notification to application administrators when a reservation is deleted',
+        'section' => 'reservation.notify'
+    ];
+    # previously NOTIFY_APPROVAL_APPLICATION_ADMINS
+    public const RESERVATION_NOTIFY_APPLICATION_ADMIN_APPROVAL = [
+        'key' => 'reservation.notify.application.admin.approval',
+        'type' => 'boolean',
+        'default' => false,
+        'label' => 'Notify Application Admin on Reservation Approval',
+        'description' => 'Send notification to application administrators when a reservation requires approval',
+        'section' => 'reservation.notify'
+    ];
+    # previously NOTIFY_CREATE_GROUP_ADMINS
+    public const RESERVATION_NOTIFY_GROUP_ADMIN_ADD = [
+        'key' => 'reservation.notify.group.admin.add',
+        'type' => 'boolean',
+        'default' => false,
+        'label' => 'Notify Group Admin on Reservation Add',
+        'description' => 'Send notification to group administrators when a reservation is created',
+        'section' => 'reservation.notify'
+    ];
+    # previously NOTIFY_UPDATE_GROUP_ADMINS
+    public const RESERVATION_NOTIFY_GROUP_ADMIN_UPDATE = [
+        'key' => 'reservation.notify.group.admin.update',
+        'type' => 'boolean',
+        'default' => false,
+        'label' => 'Notify Group Admin on Reservation Update',
+        'description' => 'Send notification to group administrators when a reservation is updated',
+        'section' => 'reservation.notify'
+    ];
+    # previously NOTIFY_DELETE_GROUP_ADMINS
+    public const RESERVATION_NOTIFY_GROUP_ADMIN_DELETE = [
+        'key' => 'reservation.notify.group.admin.delete',
+        'type' => 'boolean',
+        'default' => false,
+        'label' => 'Notify Group Admin on Reservation Delete',
+        'description' => 'Send notification to group administrators when a reservation is deleted',
+        'section' => 'reservation.notify'
+    ];
+    # previously NOTIFY_APPROVAL_GROUP_ADMINS
+    public const RESERVATION_NOTIFY_GROUP_ADMIN_APPROVAL = [
+        'key' => 'reservation.notify.group.admin.approval',
+        'type' => 'boolean',
+        'default' => false,
+        'label' => 'Notify Group Admin on Reservation Approval',
+        'description' => 'Send notification to group administrators when a reservation requires approval',
+        'section' => 'reservation.notify'
+    ];
+    # previously NOTIFY_CREATE_RESOURCE_ADMINS
+    public const RESERVATION_NOTIFY_RESOURCE_ADMIN_ADD = [
+        'key' => 'reservation.notify.resource.admin.add',
+        'type' => 'boolean',
+        'default' => false,
+        'label' => 'Notify Resource Admin on Reservation Add',
+        'description' => 'Send notification to resource administrators when a reservation is created',
+        'section' => 'reservation.notify'
+    ];
+    # previously NOTIFY_UPDATE_RESOURCE_ADMINS
+    public const RESERVATION_NOTIFY_RESOURCE_ADMIN_UPDATE = [
+        'key' => 'reservation.notify.resource.admin.update',
+        'type' => 'boolean',
+        'default' => false,
+        'label' => 'Notify Resource Admin on Reservation Update',
+        'description' => 'Send notification to resource administrators when a reservation is updated',
+        'section' => 'reservation.notify'
+    ];
+    # previously NOTIFY_DELETE_RESOURCE_ADMINS
+    public const RESERVATION_NOTIFY_RESOURCE_ADMIN_DELETE = [
+        'key' => 'reservation.notify.resource.admin.delete',
+        'type' => 'boolean',
+        'default' => false,
+        'label' => 'Notify Resource Admin on Reservation Delete',
+        'description' => 'Send notification to resource administrators when a reservation is deleted',
+        'section' => 'reservation.notify'
+    ];
+    # previously NOTIFY_APPROVAL_RESOURCE_ADMINS
+    public const RESERVATION_NOTIFY_RESOURCE_ADMIN_APPROVAL = [
+        'key' => 'reservation.notify.resource.admin.approval',
+        'type' => 'boolean',
+        'default' => false,
+        'label' => 'Notify Resource Admin on Reservation Approval',
+        'description' => 'Send notification to resource administrators when a reservation requires approval',
+        'section' => 'reservation.notify'
+    ];
+
+    // Schedule Display and Behavior
+
+    public const SCHEDULE_AUTO_SCROLL_TODAY = [
+        'key' => 'schedule.auto.scroll.today',
+        'type' => 'boolean',
+        'default' => true,
+        'label' => 'Auto Scroll to Today',
+        'description' => 'Automatically scroll the schedule view to today\'s date',
+        'config_file_comment' => 'Automatically scroll to today\'s date on load',
+        'section' => 'schedule'
+    ];
+    public const SCHEDULE_SHOW_WEEK_NUMBERS = [
+        'key' => 'schedule.show.week.numbers',
+        'type' => 'boolean',
+        'default' => false,
+        'label' => 'Show Week Numbers',
+        'description' => 'Display week numbers in the schedule view',
+        'config_file_comment' => 'Show week numbers in the calendar view',
+        'section' => 'schedule'
+    ];
+    public const SCHEDULE_HIDE_BLOCKED_PERIODS = [
+        'key' => 'schedule.hide.blocked.periods',
+        'type' => 'boolean',
+        'default' => false,
+        'label' => 'Hide Blocked Periods',
+        'description' => 'Hide periods that are blocked from reservation in the schedule view',
+        'config_file_comment' => 'Hide periods that are blocked or unavailable',
+        'section' => 'schedule'
+    ];
+    public const SCHEDULE_SHOW_INACCESSIBLE_RESOURCES = [
+        'key' => 'schedule.show.inaccessible.resources',
+        'type' => 'boolean',
+        'default' => true,
+        'label' => 'Show Inaccessible Resources',
+        'description' => 'Display resources that the user cannot access in the schedule view',
+        'config_file_comment' => 'Display resources the user cannot access',
+        'section' => 'schedule'
+    ];
+    public const SCHEDULE_RESERVATION_LABEL = [
+        'key' => 'schedule.reservation.label',
+        'type' => 'string',
+        'default' => '{name}',
+        'label' => 'Reservation Label',
+        'description' => 'Label template for reservations in the schedule view',
+        'config_file_comment' => "Format string for reservation labels (use placeholders like {name}, {title})\nAvailable properties are: {name}, {title}, {description}, {email}, {phone}, {organization}, {position}, {startdate}, {enddate} {resourcename} {participants} {invitees} {reservationAttributes}.\nCustom attributes can be added using att with the attribute id. For example {att1}",
+        'section' => 'schedule'
+    ];
+    # previously SCHEDULE_PER_USER_COLORS
+    public const SCHEDULE_USE_PER_USER_COLORS = [
+        'key' => 'schedule.use.per.user.colors',
+        'type' => 'boolean',
+        'default' => false,
+        'label' => 'Use Per-User Colors',
+        'description' => 'Display reservations in different colors for each user',
+        'config_file_comment' => 'Use different colors for each user\'s reservations',
+        'section' => 'schedule'
+    ];
+    public const SCHEDULE_UPDATE_HIGHLIGHT_MINUTES = [
+        'key' => 'schedule.update.highlight.minutes',
+        'type' => 'integer',
+        'default' => 0,
+        'label' => 'Update Highlight Minutes',
+        'description' => 'Number of minutes to highlight updated reservations in the schedule',
+        'config_file_comment' => 'Number of minutes to highlight updated reservations',
+        'section' => 'schedule'
+    ];
+    public const SCHEDULE_FAST_RESERVATION_LOAD = [
+        'key' => 'schedule.fast.reservation.load',
+        'type' => 'boolean',
+        'default' => false,
+        'label' => 'Fast Reservation Load',
+        'description' => 'Enable fast loading of reservations in the schedule view',
+        'config_file_comment' => 'Enable faster loading for reservation data (may reduce detail)',
+        'section' => 'schedule'
+    ];
+    public const SCHEDULE_LOAD_MOBILE_VIEWS = [
+        'key' => 'schedule.load.mobile.views',
+        'type' => 'boolean',
+        'default' => true,
+        'label' => 'Load Mobile Views',
+        'description' => 'Enable mobile-optimized views for the schedule',
+        'config_file_comment' => 'Load simplified mobile views on small devices',
+        'section' => 'schedule'
+    ];
+
+    // Reservations
+    public const RESERVATION_PREVENT_PARTICIPATION = [
+        'key' => 'reservation.prevent.participation',
+        'type' => 'boolean',
+        'default' => false,
+        'label' => 'Disable Participation & Invitations',
+        'description' => 'Disable reservation participation/invitations and hide participant/invitee lists in the reservation UI',
+        'section' => 'reservation'
+    ];
+    public const RESERVATION_PREVENT_RECURRENCE = [
+        'key' => 'reservation.prevent.recurrence',
+        'type' => 'boolean',
+        'default' => false,
+        'label' => 'Prevent Recurrence',
+        'description' => 'Prevent recurring reservations',
+        'config_file_comment' => 'Disable recurring reservations',
+        'section' => 'reservation'
+    ];
+    # previously RESERVATION_ALLOW_GUESTS
+    public const RESERVATION_ALLOW_GUEST_PARTICIPATION = [
+        'key' => 'reservation.allow.guest.participation',
+        'type' => 'boolean',
+        'default' => false,
+        'label' => 'Allow Guest Participation',
+        'description' => 'Allow guests to participate in reservations',
+        'config_file_comment' => 'Allow non-registered users (guests) to participate in reservations',
+        'section' => 'reservation'
+    ];
+    public const RESERVATION_ALLOW_WAITLIST = [
+        'key' => 'reservation.allow.wait.list',
+        'type' => 'boolean',
+        'default' => false,
+        'label' => 'Allow Waitlist',
+        'description' => 'Allow users to join a waitlist for reservations',
+        'config_file_comment' => 'Enable a waitlist for fully booked reservations',
+        'section' => 'reservation'
+    ];
+    public const RESERVATION_START_TIME_CONSTRAINT = [
+        'key' => 'reservation.start.time.constraint',
+        'type' => 'string',
+        'default' => 'future',
+        'choices' => [
+            'none' => 'Any time',
+            'future' => 'Future',
+            'current' => 'Current'
+        ],
+        'label' => 'Start Time Constraint',
+        'description' => 'Restrict start times. Options: future, none, current. In the standard reservation create/update flow, application admins are always exempt. Group admins are exempt only when they administer the reservation user. Resource and schedule admins are exempt only when they administer all resources in the reservation.',
+        'config_file_comment' => "Restrict start times (e.g., 'future', 'none', 'current')\nNote: In the standard reservation create/update flow, exemptions from this constraint apply only in specific cases:\n  - Application admins are always exempt.\n  - Group admins are exempt only when acting as admin for the reservation user.\n  - Resource and schedule admins are exempt only when they administer all resources in the reservation.",
+        'section' => 'reservation'
+    ];
+    public const RESERVATION_UPDATES_REQUIRE_APPROVAL = [
+        'key' => 'reservation.updates.require.approval',
+        'type' => 'boolean',
+        'default' => false,
+        'label' => 'Updates Require Approval',
+        'description' => 'Require admin approval for reservation updates',
+        'config_file_comment' => 'Require approval when an existing reservation is updated',
+        'section' => 'reservation'
+    ];
+    public const RESERVATION_TITLE_REQUIRED = [
+        'key' => 'reservation.title.required',
+        'type' => 'boolean',
+        'default' => false,
+        'label' => 'Title Required',
+        'description' => 'Require a title for reservations',
+        'config_file_comment' => 'Require a title for all reservations',
+        'section' => 'reservation'
+    ];
+    public const RESERVATION_DESCRIPTION_REQUIRED = [
+        'key' => 'reservation.description.required',
+        'type' => 'boolean',
+        'default' => false,
+        'label' => 'Description Required',
+        'description' => 'Require a description for reservations',
+        'config_file_comment' => 'Require a description for all reservations',
+        'section' => 'reservation'
+    ];
+
+    # previously RESERVATION_CHECKIN_MINUTES
+    public const RESERVATION_CHECKIN_MINUTES_PRIOR = [
+        'key' => 'reservation.checkin.minutes.prior',
+        'type' => 'integer',
+        'default' => 5,
+        'label' => 'Check-in Minutes Prior',
+        'description' => 'Number of minutes before reservation start when check-in is allowed',
+        'config_file_comment' => 'Number of minutes before start when check-in is allowed',
+        'section' => 'reservation'
+    ];
+    public const RESERVATION_CHECKIN_ADMIN_ONLY = [
+        'key' => 'reservation.checkin.admin.only',
+        'type' => 'boolean',
+        'default' => false,
+        'label' => 'Check-in Admin Only',
+        'description' => 'Only admins can check in reservations',
+        'config_file_comment' => 'Restrict check-in functionality to administrators only',
+        'section' => 'reservation'
+    ];
+    public const RESERVATION_CHECKOUT_ADMIN_ONLY = [
+        'key' => 'reservation.checkout.admin.only',
+        'type' => 'boolean',
+        'default' => false,
+        'label' => 'Checkout Admin Only',
+        'description' => 'Only admins can check out reservations',
+        'config_file_comment' => 'Restrict check-out functionality to administrators only',
+        'section' => 'reservation'
+    ];
+
+    # previously RESERVATION_ENABLE_REMINDERS
+    public const RESERVATION_REMINDERS_ENABLED = [
+        'key' => 'reservation.reminders.enabled',
+        'legacy' => 'reservation.enable.reminders',
+        'type' => 'boolean',
+        'default' => false,
+        'label' => 'Enable Reservation Reminders',
+        'description' => 'Enable email reminders for reservations',
+        'config_file_comment' => 'Enable reminder notifications for upcoming reservations',
+        'section' => 'reservation'
+    ];
+    # previously RESERVATION_DEFAULT_START_REMINDER
+    public const RESERVATION_REMINDER_DEFAULT_START = [
+        'key' => 'reservation.default.start.reminder',
+        'type' => 'string',
+        'default' => '',
+        'label' => 'Default reminder time before reservation start (e.g., \'15 minutes\', \'1 hours\', \'1 days\')',
+        'description' => 'Default start reservation reminder. Format is an interval using only minutes, hours, or days',
+        'config_file_comment' => 'Default reminder time before reservation start (e.g., \'15 minutes\', \'1 hours\', \'1 days\')',
+        'section' => 'reservation'
+    ];
+    # previously RESERVATION_DEFAULT_END_REMINDER
+    public const RESERVATION_REMINDER_DEFAULT_END = [
+        'key' => 'reservation.default.end.reminder',
+        'type' => 'string',
+        'default' => '',
+        'label' => 'Default reminder time before reservation end (e.g., \'15 minutes\', \'1 hours\', \'1 days\')',
+        'description' => 'Default end reservation reminder. Format is an interval using only minutes, hours, or days (e.g., 1 days)',
+        'config_file_comment' => 'Default reminder time before reservation end (e.g., \'15 minutes\', \'1 hours\', \'1 days\')',
+        'section' => 'reservation'
+    ];
+
+    // Reservation Label Templates
+
+    public const RESERVATION_LABELS_ICS_SUMMARY = [
+        'key' => 'reservation.labels.ics.summary',
+        'type' => 'string',
+        'default' => '{title}',
+        'label' => 'ICS Summary Label',
+        'description' => 'Label template for ICS calendar summary',
+        'config_file_comment' => "ICS calendar summary text for all reservations\nAvailable properties are: {name}, {title}, {description}, {email}, {phone}, {organization}, {position}, {startdate}, {enddate} {resourcename} {participants} {invitees} {reservationAttributes}.\nCustom attributes can be added using att with the attribute id. For example {att1}",
+        'section' => 'reservation.labels'
+    ];
+    # previously RESERVATION_LABELS_MY_ICS_SUMMARY
+    public const RESERVATION_LABELS_ICS_MY_SUMMARY = [
+        'key' => 'reservation.labels.ics.my.summary',
+        'type' => 'string',
+        'default' => '{title}',
+        'label' => 'ICS My Summary Label',
+        'description' => 'Label template for ICS calendar summary for my reservations',
+        'config_file_comment' => 'ICS calendar summary text for a user\'s reservations',
+        'section' => 'reservation.labels'
+    ];
+    public const RESERVATION_LABELS_RSS_DESCRIPTION = [
+        'key' => 'reservation.labels.rss.description',
+        'type' => 'string',
+        'default' => '<div><span>Start</span> {startdate}</div><div><span>End</span> {enddate}</div><div><span>Organizer</span> {name}</div><div><span>Description</span> {description}</div>',
+        'label' => 'RSS Description Label',
+        'description' => 'Label template for RSS feed description',
+        'config_file_comment' => 'RSS feed description template for reservations (HTML allowed)',
+        'section' => 'reservation.labels'
+    ];
+    public const RESERVATION_LABELS_MY_CALENDAR = [
+        'key' => 'reservation.labels.my.calendar',
+        'type' => 'string',
+        'default' => '{resourcename} {title}',
+        'label' => 'My Calendar Label',
+        'description' => 'Label template for my calendar',
+        'config_file_comment' => 'Label template used in the \'My Calendar\' view',
+        'section' => 'reservation.labels'
+    ];
+    public const RESERVATION_LABELS_RESOURCE_CALENDAR = [
+        'key' => 'reservation.labels.resource.calendar',
+        'type' => 'string',
+        'default' => '{name}',
+        'label' => 'Resource Calendar Label',
+        'description' => 'Label template for resource calendar',
+        'config_file_comment' => 'Label template for resource-specific calendars',
+        'section' => 'reservation.labels'
+    ];
+    public const RESERVATION_LABELS_RESERVATION_POPUP = [
+        'key' => 'reservation.labels.reservation.popup',
+        'type' => 'string',
+        'default' => '',
+        'label' => 'Reservation Popup Label',
+        'description' => 'Label template for reservation popup',
+        'config_file_comment' => 'Label used in display in reservation popups',
+        'section' => 'reservation.labels'
+    ];
+
+    public const REPORTS_ALLOW_ALL_USERS = [
+        'key' => 'reports.allow.all.users',
+        'type' => 'boolean',
+        'default' => false,
+        'label' => 'Allow All Users to Access Reports',
+        'description' => 'Allow all users to access reports, not just admins',
+        'config_file_comment' => 'Allow all users to access reports',
+        'section' => 'reports'
+    ];
+
+    // Registration
+
+    # previously ALLOW_REGISTRATION
+    public const REGISTRATION_ALLOW_SELF = [
+        'key' => 'registration.allow.self.registration',
+        'legacy' => 'allow.self.registration',
+        'type' => 'boolean',
+        'default' => true,
+        'label' => 'Allow Self Registration',
+        'description' => 'Allow users to register themselves',
+        'config_file_comment' => 'Enable self-registration for new users',
+        'section' => 'registration'
+    ];
+    public const REGISTRATION_REQUIRE_PHONE = [
+        'key' => 'registration.require.phone',
+        'type' => 'boolean',
+        'default' => false,
+        'label' => 'Require Phone',
+        'description' => 'Require phone number during registration',
+        'section' => 'registration'
+    ];
+    public const REGISTRATION_REQUIRE_POSITION = [
+        'key' => 'registration.require.position',
+        'type' => 'boolean',
+        'default' => false,
+        'label' => 'Require Position',
+        'description' => 'Require position during registration',
+        'config_file_comment' => 'Require position/title during registration',
+        'section' => 'registration'
+    ];
+    public const REGISTRATION_REQUIRE_ORGANIZATION = [
+        'key' => 'registration.require.organization',
+        'type' => 'boolean',
+        'default' => false,
+        'label' => 'Require Organization',
+        'description' => 'Require organization during registration',
+        'config_file_comment' => 'Require organization name during registration',
+        'section' => 'registration'
+    ];
+    public const REGISTRATION_HIDE_PHONE = [
+        'key' => 'registration.hide.phone',
+        'type' => 'boolean',
+        'default' => false,
+        'label' => 'Hide Phone',
+        'description' => 'Hide phone field during registration',
+        'config_file_comment' => 'Hide phone field from the registration form',
+        'section' => 'registration'
+    ];
+    public const REGISTRATION_HIDE_POSITION = [
+        'key' => 'registration.hide.position',
+        'type' => 'boolean',
+        'default' => false,
+        'label' => 'Hide Position',
+        'description' => 'Hide position field during registration',
+        'config_file_comment' => 'Hide position/title field from the registration form',
+        'section' => 'registration'
+    ];
+    public const REGISTRATION_HIDE_ORGANIZATION = [
+        'key' => 'registration.hide.organization',
+        'type' => 'boolean',
+        'default' => false,
+        'label' => 'Hide Organization',
+        'description' => 'Hide organization field during registration',
+        'config_file_comment' => 'Hide organization field from the registration form',
+        'section' => 'registration'
+    ];
+    # previously REGISTRATION_ENABLE_CAPTCHA
+    public const REGISTRATION_CAPTCHA_ENABLED = [
+        'key' => 'registration.captcha.enabled',
+        'type' => 'boolean',
+        'default' => true,
+        'label' => 'Enable Registration Captcha',
+        'description' => 'Enable captcha on the registration form',
+        'config_file_comment' => 'Enable CAPTCHA during user registration',
+        'section' => 'registration'
+    ];
+    # previously REGISTRATION_REQUIRE_ACTIVATION
+    public const REGISTRATION_REQUIRE_EMAIL_ACTIVATION = [
+        'key' => 'registration.require.email.activation',
+        'type' => 'boolean',
+        'default' => false,
+        'label' => 'Require Email Activation',
+        'description' => 'Require email activation for new registrations',
+        'config_file_comment' => 'Require users to activate their account via email',
+        'section' => 'registration'
+    ];
+    public const REGISTRATION_AUTO_SUBSCRIBE_EMAIL = [
+        'key' => 'registration.auto.subscribe.email',
+        'type' => 'boolean',
+        'default' => false,
+        'label' => 'Auto Subscribe Email',
+        'description' => 'Automatically subscribe new users to email notifications',
+        'section' => 'registration'
+    ];
+    # previously REGISTRATION_NOTIFY
+    public const REGISTRATION_NOTIFY_ADMIN = [
+        'key' => 'registration.notify.admin',
+        'type' => 'boolean',
+        'default' => false,
+        'label' => 'Notify Admin on Registration',
+        'description' => 'Send notification to admin when a new user registers',
+        'config_file_comment' => 'Notify the admin when a new user registers',
+        'section' => 'registration'
+    ];
+
+    // Resource settings
+
+    public const RESOURCE_CONTACT_IS_USER = [
+        'key' => 'resource.contact.is.user',
+        'type' => 'boolean',
+        'default' => false,
+        'label' => 'Is User Contact',
+        'description' => 'Indicates if the contact must be a registered user',
+        'section' => 'resource'
+    ];
+
+    // Tablet View Options
+    public const TABLET_VIEW_ALLOW_RESERVATIONS = [
+        'key' => 'tablet.view.allow.reservations',
+        'type' => 'boolean',
+        'default' => true,
+        'label' => 'Allows reservations',
+        'description' => 'Allows users to make reservations in the tablet view',
+        'config_file_comment' => 'Allow users to make reservations in the tablet view',
+        'section' => 'tablet.view'
+    ];
+
+    # previously TABLET_VIEW_ALLOW_GUESTS
+    public const TABLET_VIEW_ALLOW_GUEST_RESERVATIONS = [
+        'key' => 'tablet.view.allow.guest.reservations',
+        'type' => 'boolean',
+        'default' => false,
+        'label' => 'Allow Guest Reservations (Tablet View)',
+        'description' => 'Allow guests to make reservations from the tablet view',
+        'section' => 'tablet.view'
+    ];
+    # previously TABLET_VIEW_AUTOCOMPLETE
+    public const TABLET_VIEW_AUTO_SUGGEST_EMAILS = [
+        'key' => 'tablet.view.auto.suggest.emails',
+        'type' => 'boolean',
+        'default' => false,
+        'label' => 'Auto Suggest Emails (Tablet View)',
+        'description' => 'Enable email auto-suggestion in tablet view',
+        'config_file_comment' => 'Suggest known email addresses during reservation creation',
+        'section' => 'tablet.view'
+    ];
+
+    // ICS Settings
+
+    public const ICS_ENABLED = [
+        'key' => 'ics.enabled',
+        'type' => 'boolean',
+        'default' => true,
+        'label' => 'ICS Enabled',
+        'description' => 'Enable ICS/Atom calendar subscription feeds. When disabled, all ICS/Atom subscription requests return 404 and the subscription link is hidden in the UI.',
+        'config_file_comment' => 'Enable or disable ICS calendar subscription feeds entirely',
+        'section' => 'ics'
+    ];
+    public const ICS_SUBSCRIPTION_KEY = [
+        'key' => 'ics.subscription.key',
+        'type' => 'string',
+        'default' => '',
+        'label' => 'ICS Subscription Key',
+        'description' => 'Key required for ICS calendar subscriptions',
+        'config_file_comment' => 'Subscription key secret used for ICS calendar feeds',
+        'section' => 'ics'
+    ];
+    public const ICS_FUTURE_DAYS = [
+        'key' => 'ics.future.days',
+        'type' => 'integer',
+        'default' => 30,
+        'label' => 'ICS Future Days',
+        'description' => 'Number of future days to include in ICS feeds',
+        'section' => 'ics'
+    ];
+    public const ICS_PAST_DAYS = [
+        'key' => 'ics.past.days',
+        'type' => 'integer',
+        'default' => 0,
+        'label' => 'ICS Past Days',
+        'description' => 'Number of past days to include in ICS feeds',
+        'section' => 'ics'
+    ];
+
+    // Data Retention and Deletion
+
+    # previously YEARS_OLD_DATA
+    public const CLEANUP_YEARS_OLD_DATA = [
+        'key' => 'cleanup.years.old.data',
+        'legacy' => 'delete.old.data.years.old.data',
+        'type' => 'integer',
+        'default' => 3,
+        'label' => 'Cleanup Years Old Data',
+        'description' => 'Delete data older than this number of years',
+        'config_file_comment' => "Requires  'deleteolddata.php' to run as a cron job\nNumber of years after which old data is considered for deletion",
+        'section' => 'cleanup'
+    ];
+    # previously DELETE_OLD_ANNOUNCEMENTS
+    public const CLEANUP_DELETE_OLD_ANNOUNCEMENTS = [
+        'key' => 'cleanup.delete.old.announcements',
+        'legacy' => 'delete.old.data.delete.old.announcements',
+        'type' => 'boolean',
+        'default' => false,
+        'label' => 'Delete Old Announcements',
+        'description' => 'Delete old announcements during cleanup',
+        'config_file_comment' => 'Automatically delete old announcements',
+        'section' => 'cleanup'
+    ];
+    # previously DELETE_OLD_BLACKOUTS
+    public const CLEANUP_DELETE_OLD_BLACKOUTS = [
+        'key' => 'cleanup.delete.old.blackouts',
+        'legacy' => 'delete.old.data.delete.old.blackouts',
+        'type' => 'boolean',
+        'default' => false,
+        'label' => 'Delete Old Blackouts',
+        'description' => 'Delete old blackouts during cleanup',
+        'config_file_comment' => 'Automatically delete old blackout periods',
+        'section' => 'cleanup'
+    ];
+    # previously DELETE_OLD_RESERVATIONS
+    public const CLEANUP_DELETE_OLD_RESERVATIONS = [
+        'key' => 'cleanup.delete.old.reservations',
+        'legacy' => 'delete.old.data.delete.old.reservations',
+        'type' => 'boolean',
+        'default' => false,
+        'label' => 'Delete Old Reservations',
+        'description' => 'Delete old reservations during cleanup',
+        'config_file_comment' => 'Automatically delete old reservations',
+        'section' => 'cleanup'
+    ];
+
+    // Password Policy
+
+    # previously DISABLE_PASSWORD_RESET
+    public const PASSWORD_DISABLE_RESET = [
+        'key' => 'password.disable.reset',
+        'legacy' => 'disable.password.reset',
+        'type' => 'boolean',
+        'default' => false,
+        'label' => 'Disable Password Reset',
+        'description' => 'Disable the password reset feature',
+        'config_file_comment' => 'Disable the \'Forgot Password\' feature',
+        'section' => 'password'
+    ];
+    # previously PASSWORD_LETTERS
+    public const PASSWORD_MINIMUM_LETTERS = [
+        'key' => 'password.minimum.letters',
+        'type' => 'integer',
+        'default' => 6,
+        'label' => 'Minimum Letters in Password',
+        'description' => 'Minimum number of letters required in passwords',
+        'section' => 'password'
+    ];
+    # previously PASSWORD_NUMBERS
+    public const PASSWORD_MINIMUM_NUMBERS = [
+        'key' => 'password.minimum.numbers',
+        'type' => 'integer',
+        'default' => 0,
+        'label' => 'Minimum Numbers in Password',
+        'description' => 'Minimum number of numbers required in passwords',
+        'config_file_comment' => 'Minimum number of numeric digits required in passwords',
+        'section' => 'password'
+    ];
+    public const PASSWORD_UPPER_AND_LOWER = [
+        'key' => 'password.upper.and.lower',
+        'type' => 'boolean',
+        'default' => false,
+        'label' => 'Require Upper and Lower Case',
+        'description' => 'Require both upper and lower case letters in passwords',
+        'config_file_comment' => 'Require both upper and lower case characters in passwords',
+        'section' => 'password'
+    ];
+
+    // Privacy
+
+    public const PRIVACY_VIEW_SCHEDULES = [
+        'key' => 'privacy.view.schedules',
+        'type' => 'boolean',
+        'default' => true,
+        'label' => 'View Schedules',
+        'description' => 'Allow public (not logged-in) users to browse schedule and calendar pages. When false and guest reservations are also disabled, unauthenticated visitors are redirected to login.',
+        'config_file_comment' => 'Allow public (not logged-in) users to view schedule and calendar pages',
+        'section' => 'privacy'
+    ];
+    public const PRIVACY_VIEW_RESERVATIONS = [
+        'key' => 'privacy.view.reservations',
+        'type' => 'boolean',
+        'default' => false,
+        'label' => 'View Reservations',
+        'description' => 'When true, reservation details are shown in public schedule/calendar views. When false (default), public views show only that a slot is occupied with no details. Authenticated users and admins can still see full details via the regular schedule regardless of this setting. Also affects ICS feeds.',
+        'config_file_comment' => "When true, public (unauthenticated) views show reservation details.\nWhen false (default), public views show only that a slot is occupied with no content.",
+        'section' => 'privacy'
+    ];
+    public const PRIVACY_HIDE_USER_DETAILS = [
+        'key' => 'privacy.hide.user.details',
+        'type' => 'boolean',
+        'default' => false,
+        'label' => 'Hide User Details',
+        'description' => 'When true, the organizer name and email are hidden from users who are not the owner or an admin, showing "Private" instead. Affects schedule views, popups, calendar labels, autocomplete, ICS feeds, and the API.',
+        'config_file_comment' => 'When true, non-owner/non-admin users see "Private" instead of the organizer name and email',
+        'section' => 'privacy'
+    ];
+    public const PRIVACY_HIDE_RESERVATION_DETAILS = [
+        'key' => 'privacy.hide.reservation.details',
+        'type' => 'boolean',
+        'default' => false,
+        'label' => 'Hide Reservation Details',
+        'description' => 'Hide reservation details from other users',
+        'config_file_comment' => 'Hide reservation details from general users',
+        'section' => 'privacy'
+    ];
+    # previously PRIVACY_ALLOW_GUEST_BOOKING
+    public const PRIVACY_ALLOW_GUEST_RESERVATIONS = [
+        'key' => 'privacy.allow.guest.reservations',
+        'type' => 'boolean',
+        'default' => false,
+        'label' => 'Allow Guest Reservations',
+        'description' => 'Allow guests to make reservations',
+        'config_file_comment' => 'Allow guest users to make reservations',
+        'section' => 'privacy'
+    ];
+    public const PRIVACY_PUBLIC_FUTURE_DAYS = [
+        'key' => 'privacy.public.future.days',
+        'type' => 'integer',
+        'default' => 30,
+        'label' => 'Public Future Days',
+        'description' => 'Number of future days visible to the public',
+        'config_file_comment' => 'Set number of days in the future for which reservations can be made by guest users',
+        'section' => 'privacy'
+    ];
+
+    // reCAPTCHA
+
+    public const RECAPTCHA_ENABLED = [
+        'key' => 'recaptcha.enabled',
+        'type' => 'boolean',
+        'default' => false,
+        'label' => 'Enable reCAPTCHA',
+        'description' => 'Enable Google reCAPTCHA for forms',
+        'config_file_comment' => 'Enable Google reCAPTCHA on login or registration',
+        'section' => 'recaptcha'
+    ];
+    public const RECAPTCHA_PUBLIC_KEY = [
+        'key' => 'recaptcha.public.key',
+        'type' => 'string',
+        'default' => '',
+        'label' => 'reCAPTCHA Public Key',
+        'description' => 'Public key for Google reCAPTCHA',
+        'config_file_comment' => 'Google reCAPTCHA public site key',
+        'section' => 'recaptcha'
+    ];
+    public const RECAPTCHA_PRIVATE_KEY = [
+        'key' => 'recaptcha.private.key',
+        'type' => 'string',
+        'default' => '',
+        'label' => 'reCAPTCHA Private Key',
+        'description' => 'Private key for Google reCAPTCHA',
+        'config_file_comment' => 'Google reCAPTCHA secret key',
+        'section' => 'recaptcha',
+        'is_private' => true
+    ];
+    public const RECAPTCHA_REQUEST_METHOD = [
+        'key' => 'recaptcha.request.method',
+        'type' => 'string',
+        'default' => 'curl',
+        'label' => 'reCAPTCHA Request Method',
+        'description' => 'HTTP method to use for reCAPTCHA validation. Options: curl, post, socket',
+        'config_file_comment' => "HTTP request method used for verification\nOptions: curl, post, socket",
+        'section' => 'recaptcha'
+    ];
+
+    // Security Headers
+
+    public const SECURITY_HEADERS = [
+        'key' => 'security.headers',
+        'legacy' => 'security.security.headers',
+        'type' => 'boolean',
+        'default' => false,
+        'label' => 'Enable Security Headers',
+        'description' => 'Enable sending of security headers',
+        'config_file_comment' => 'Enable the following security headers in HTTP responses',
+        'section' => 'security'
+    ];
+    public const SECURITY_STRICT_TRANSPORT = [
+        'key' => 'security.strict-transport',
+        'legacy' => 'security.security.strict-transport',
+        'type' => 'string',
+        'default' => 'max-age=31536000',
+        'label' => 'Strict Transport Security',
+        'description' => 'Enable HTTP Strict Transport Security (HSTS)',
+        'config_file_comment' => 'HTTP Strict Transport Security (HSTS) header value',
+        'section' => 'security'
+    ];
+    public const SECURITY_X_FRAME = [
+        'key' => 'security.x-frame',
+        'legacy' => 'security.security.x-frame',
+        'type' => 'string',
+        'default' => 'deny',
+        'label' => 'X-Frame-Options',
+        'description' => 'Set the X-Frame-Options header value',
+        'config_file_comment' => 'X-Frame-Options header value (e.g., deny, sameorigin)',
+        'section' => 'security'
+    ];
+    public const SECURITY_X_CONTENT_TYPE = [
+        'key' => 'security.x-content-type',
+        'legacy' => 'security.security.x-content-type',
+        'type' => 'string',
+        'default' => 'nosniff',
+        'label' => 'X-Content-Type-Options',
+        'description' => 'Set the X-Content-Type-Options header value',
+        'config_file_comment' => 'X-Content-Type-Options header value',
+        'section' => 'security'
+    ];
+    public const SECURITY_CONTENT_SECURITY_POLICY = [
+        'key' => 'security.content-security-policy',
+        'legacy' => 'security.security.content-security-policy',
+        'type' => 'string',
+        'default' => '',
+        'label' => 'Content Security Policy',
+        'description' => 'Set the Content-Security-Policy header value',
+        'section' => 'security'
+    ];
+
+    // Credit System Settings
+
+    public const CREDITS_ENABLED = [
+        'key' => 'credits.enabled',
+        'type' => 'boolean',
+        'default' => false,
+        'label' => 'Enable Credits System',
+        'description' => 'Enable or disable the credits system for reservations',
+        'config_file_comment' => 'Enable credit-based reservation system',
+        'section' => 'credits'
+    ];
+    public const CREDITS_ALLOW_PURCHASE = [
+        'key' => 'credits.allow.purchase',
+        'type' => 'boolean',
+        'default' => false,
+        'label' => 'Allow Credit Purchase',
+        'description' => 'Allow users to purchase credits',
+        'section' => 'credits'
+    ];
+
+    // Analytics Integration
+
+    public const GOOGLE_ANALYTICS_TRACKING_ID = [
+        'key' => 'google.analytics.tracking.id',
+        'type' => 'string',
+        'default' => '',
+        'label' => 'Google Analytics Tracking ID',
+        'description' => 'Tracking ID for Google Analytics integration',
+        'config_file_comment' => 'Google Analytics tracking ID (e.g., UA-XXXXXXX or G-XXXXXXXX)',
+        'section' => '',
+        'is_private' => true,
+    ];
+
+    // Slack Integration
+    public const SLACK_TOKEN = [
+        'key' => 'slack.token',
+        'type' => 'string',
+        'default' => '',
+        'label' => 'Slack Token',
+        'description' => 'Token for Slack integration',
+        'config_file_comment' => 'Slack webhook token for sending notifications',
+        'section' => '',
+        'is_private' => true,
+    ];
+
+    // Authentication Settings
+    public const AUTHENTICATION_HIDE_LOGIN_PROMPT = [
+        'key' => 'authentication.hide.login.prompt',
+        'legacy' => 'authentication.hide.booked.login.prompt',
+        'type' => 'boolean',
+        'default' => false,
+        'label' => 'Hide Login Prompt',
+        'description' => 'Hide the login prompt on the login page',
+        'config_file_comment' => 'Hide the login prompt',
+        'section' => 'authentication'
+    ];
+    public const AUTHENTICATION_CAPTCHA_ON_LOGIN = [
+        'key' => 'authentication.captcha.on.login',
+        'type' => 'boolean',
+        'default' => false,
+        'label' => 'Captcha on Login',
+        'description' => 'Enable captcha on the login form',
+        'config_file_comment' => 'Enable CAPTCHA on login page',
+        'section' => 'authentication'
+    ];
+    public const AUTHENTICATION_REQUIRED_EMAIL_DOMAINS = [
+        'key' => 'authentication.required.email.domains',
+        'type' => 'string',
+        'default' => '',
+        'label' => 'Required Email Domains',
+        'description' => 'Comma-separated list of allowed email domains for registration',
+        'config_file_comment' => 'Restrict registration to specific email domains (comma-separated, e.g., example.com,school.edu)',
+        'section' => 'authentication'
+    ];
+    public const AUTHENTICATION_GOOGLE_LOGIN_ENABLED = [
+        'key' => 'authentication.google.login.enabled',
+        'legacy' => 'authentication.allow.google.login',
+        'type' => 'boolean',
+        'default' => false,
+        'label' => 'Enable Google Login',
+        'description' => 'Allow users to log in with Google',
+        'config_file_comment' => 'Enable login via Google',
+        'section' => 'authentication'
+    ];
+    public const AUTHENTICATION_GOOGLE_CLIENT_ID = [
+        'key' => 'authentication.google.client.id',
+        'type' => 'string',
+        'default' => '',
+        'label' => 'Google Client ID',
+        'description' => 'Client ID for Google OAuth login',
+        'config_file_comment' => 'Google OAuth2 client credentials',
+        'section' => 'authentication'
+    ];
+    public const AUTHENTICATION_GOOGLE_CLIENT_SECRET = [
+        'key' => 'authentication.google.client.secret',
+        'type' => 'string',
+        'default' => '',
+        'label' => 'Google Client Secret',
+        'description' => 'Client secret for Google OAuth login',
+        'section' => 'authentication'
+    ];
+    public const AUTHENTICATION_GOOGLE_REDIRECT_URI = [
+        'key' => 'authentication.google.redirect.uri',
+        'type' => 'string',
+        'default' => '/Web/google-auth.php',
+        'label' => 'Google Redirect URI',
+        'description' => 'Redirect URI for Google OAuth login',
+        'config_file_comment' => "Path to the Google redirect URI\n/Web/google-auth.php",
+        'section' => 'authentication'
+    ];
+    public const AUTHENTICATION_MICROSOFT_LOGIN_ENABLED = [
+        'key' => 'authentication.microsoft.login.enabled',
+        'legacy' => 'authentication.allow.microsoft.login',
+        'type' => 'boolean',
+        'default' => false,
+        'label' => 'Enable Microsoft Login',
+        'description' => 'Allow users to log in with Microsoft',
+        'config_file_comment' => 'Enable login via Microsoft',
+        'section' => 'authentication'
+    ];
+    public const AUTHENTICATION_MICROSOFT_CLIENT_ID = [
+        'key' => 'authentication.microsoft.client.id',
+        'type' => 'string',
+        'default' => '',
+        'label' => 'Microsoft Client ID',
+        'description' => 'Client ID for Microsoft OAuth login',
+        'config_file_comment' => 'Microsoft OAuth2 client credentials',
+        'section' => 'authentication'
+    ];
+    public const AUTHENTICATION_MICROSOFT_TENANT_ID = [
+        'key' => 'authentication.microsoft.tenant.id',
+        'type' => 'string',
+        'default' => 'common',
+        'label' => 'Microsoft Tenant ID',
+        'description' => 'Tenant ID for Microsoft OAuth login',
+        'config_file_comment' => 'Replace with your tenant id if the app is single tenant',
+        'section' => 'authentication'
+    ];
+    public const AUTHENTICATION_MICROSOFT_CLIENT_SECRET = [
+        'key' => 'authentication.microsoft.client.secret',
+        'type' => 'string',
+        'default' => '',
+        'label' => 'Microsoft Client Secret',
+        'description' => 'Client secret for Microsoft OAuth login',
+        'config_file_comment' => 'Microsoft OAuth2 client secret',
+        'section' => 'authentication',
+        'is_private' => true
+    ];
+    public const AUTHENTICATION_MICROSOFT_REDIRECT_URI = [
+        'key' => 'authentication.microsoft.redirect.uri',
+        'type' => 'string',
+        'default' => '/Web/microsoft-auth.php',
+        'label' => 'Microsoft Redirect URI',
+        'description' => 'Redirect URI for Microsoft OAuth login',
+        'config_file_comment' => "Path to the Microsoft redirect URI\n/Web/microsoft-auth.php",
+        'section' => 'authentication'
+    ];
+    public const AUTHENTICATION_FACEBOOK_LOGIN_ENABLED = [
+        'key' => 'authentication.facebook.login.enabled',
+        'legacy' => 'authentication.allow.facebook.login',
+        'type' => 'boolean',
+        'default' => false,
+        'label' => 'Enable Facebook Login',
+        'description' => 'Allow users to log in with Facebook',
+        'config_file_comment' => 'Enable login via Facebook',
+        'section' => 'authentication'
+    ];
+    public const AUTHENTICATION_FACEBOOK_CLIENT_ID = [
+        'key' => 'authentication.facebook.client.id',
+        'type' => 'string',
+        'default' => '',
+        'label' => 'Facebook Client ID',
+        'description' => 'Client ID for Facebook OAuth login',
+        'config_file_comment' => 'Facebook App credentials',
+        'section' => 'authentication'
+    ];
+    public const AUTHENTICATION_FACEBOOK_CLIENT_SECRET = [
+        'key' => 'authentication.facebook.client.secret',
+        'type' => 'string',
+        'default' => '',
+        'label' => 'Facebook Client Secret',
+        'description' => 'Client secret for Facebook OAuth login',
+        'config_file_comment' => 'Facebook App client secret',
+        'section' => 'authentication',
+        'is_private' => true
+    ];
+    public const AUTHENTICATION_FACEBOOK_REDIRECT_URI = [
+        'key' => 'authentication.facebook.redirect.uri',
+        'type' => 'string',
+        'default' => '/Web/facebook-auth.php',
+        'label' => 'Facebook Redirect URI',
+        'description' => 'Redirect URI for Facebook OAuth login',
+        'config_file_comment' => "Facebook OAuth2 redirect URI\n/Web/facebook-auth.php",
+        'section' => 'authentication'
+    ];
+    public const AUTHENTICATION_KEYCLOAK_LOGIN_ENABLED = [
+        'key' => 'authentication.keycloak.login.enabled',
+        'legacy' => 'authentication.allow.keycloak.login',
+        'type' => 'boolean',
+        'default' => false,
+        'label' => 'Enable Keycloak Login',
+        'description' => 'Allow users to log in with Keycloak',
+        'config_file_comment' => 'Enable login via Keycloak',
+        'section' => 'authentication'
+    ];
+    public const AUTHENTICATION_KEYCLOAK_URL = [
+        'key' => 'authentication.keycloak.url',
+        'type' => 'string',
+        'default' => '',
+        'label' => 'Keycloak URL',
+        'description' => 'URL for Keycloak server',
+        'config_file_comment' => 'Keycloak OAuth2 credentials',
+        'section' => 'authentication'
+    ];
+    public const AUTHENTICATION_KEYCLOAK_REALM = [
+        'key' => 'authentication.keycloak.realm',
+        'type' => 'string',
+        'default' => '',
+        'label' => 'Keycloak Realm',
+        'description' => 'Realm for Keycloak authentication',
+        'section' => 'authentication'
+    ];
+    public const AUTHENTICATION_KEYCLOAK_CLIENT_ID = [
+        'key' => 'authentication.keycloak.client.id',
+        'type' => 'string',
+        'default' => '',
+        'label' => 'Keycloak Client ID',
+        'description' => 'Client ID for Keycloak OAuth login',
+        'section' => 'authentication'
+    ];
+    public const AUTHENTICATION_KEYCLOAK_CLIENT_SECRET = [
+        'key' => 'authentication.keycloak.client.secret',
+        'type' => 'string',
+        'default' => '',
+        'label' => 'Keycloak Client Secret',
+        'description' => 'Client secret for Keycloak OAuth login',
+        'section' => 'authentication',
+        'is_private' => true
+    ];
+    public const AUTHENTICATION_KEYCLOAK_REDIRECT_URI = [
+        'key' => 'authentication.keycloak.client.uri',
+        'type' => 'string',
+        'default' => '/Web/keycloak-auth.php',
+        'label' => 'Keycloak Redirect URI',
+        'description' => 'Redirect URI for Keycloak OAuth login',
+        'section' => 'authentication'
+    ];
+    public const AUTHENTICATION_OAUTH2_LOGIN_ENABLED = [
+        'key' => 'authentication.oauth2.login.enabled',
+        'legacy' => 'authentication.allow.oauth2.login',
+        'type' => 'boolean',
+        'default' => false,
+        'label' => 'Enable OAuth2 Login',
+        'description' => 'Allow users to log in with OAuth2',
+        'config_file_comment' => 'Enable login via custom OAuth2 provider',
+        'section' => 'authentication'
+    ];
+    public const AUTHENTICATION_OAUTH2_NAME = [
+        'key' => 'authentication.oauth2.name',
+        'type' => 'string',
+        'default' => 'OAuth2',
+        'label' => 'OAuth2 Name',
+        'description' => 'Display name for OAuth2 login',
+        'config_file_comment' => 'OAuth2 identity provider name (shown on login button)',
+        'section' => 'authentication'
+    ];
+    public const AUTHENTICATION_OAUTH2_STRIP_TRAILING_SLASH = [
+        'key' => 'authentication.oauth2.strip.trailing.slash',
+        'type' => 'boolean',
+        'default' => true,
+        'label' => 'Removes authorize URL trailing slash',
+        'description' => 'When enabled, removes any trailing slash on the OAuth2 authorize URL; when disabled, preserves a trailing slash if present. Does not affect token or userinfo URLs.',
+        'config_file_comment' => "OAuth2 endpoint URLs and client credentials\nIf true, the configured authorize URL's trailing slash is removed",
+        'section' => 'authentication'
+    ];
+    public const AUTHENTICATION_OAUTH2_URL_AUTHORIZE = [
+        'key' => 'authentication.oauth2.url.authorize',
+        'type' => 'string',
+        'default' => '',
+        'label' => 'OAuth2 Authorize URL',
+        'description' => 'Authorization URL for OAuth2 login',
+        'section' => 'authentication'
+    ];
+    public const AUTHENTICATION_OAUTH2_URL_TOKEN = [
+        'key' => 'authentication.oauth2.url.token',
+        'type' => 'string',
+        'default' => '',
+        'label' => 'OAuth2 Token URL',
+        'description' => 'Token URL for OAuth2 login',
+        'section' => 'authentication'
+    ];
+    public const AUTHENTICATION_OAUTH2_URL_USERINFO = [
+        'key' => 'authentication.oauth2.url.userinfo',
+        'type' => 'string',
+        'default' => '',
+        'label' => 'OAuth2 Userinfo URL',
+        'description' => 'Userinfo URL for OAuth2 login',
+        'section' => 'authentication'
+    ];
+    public const AUTHENTICATION_OAUTH2_CLIENT_ID = [
+        'key' => 'authentication.oauth2.client.id',
+        'type' => 'string',
+        'default' => '',
+        'label' => 'OAuth2 Client ID',
+        'description' => 'Client ID for OAuth2 login',
+        'section' => 'authentication'
+    ];
+    public const AUTHENTICATION_OAUTH2_CLIENT_SECRET = [
+        'key' => 'authentication.oauth2.client.secret',
+        'type' => 'string',
+        'default' => '',
+        'label' => 'OAuth2 Client Secret',
+        'description' => 'Client secret for OAuth2 login',
+        'section' => 'authentication',
+        'is_private' => true
+    ];
+    public const AUTHENTICATION_OAUTH2_REDIRECT_URI = [
+        'key' => 'authentication.oauth2.client.uri',
+        'type' => 'string',
+        'default' => '/Web/oauth2-auth.php',
+        'label' => 'OAuth2 Redirect URI',
+        'description' => 'Redirect URI for OAuth2 login',
+        'section' => 'authentication'
+    ];
+
+    // Plugin Configuration
+
+    public const PLUGIN_AUTHENTICATION = [
+        'key' => 'plugins.authentication',
+        'type' => 'string',
+        'default' => '',
+        'allow_custom' => true,
+        'choices' => [
+            '' => 'None',
+            'ActiveDirectory' => 'ActiveDirectory',
+            'Apache' => 'Apache',
+            'CAS' => 'CAS',
+            'Drupal' => 'Drupal',
+            'Krb5' => 'Krb5',
+            'Ldap' => 'Ldap',
+            'Mellon' => 'Mellon',
+            'Moodle' => 'Moodle',
+            'MoodleAdv' => 'MoodleAdv',
+            'Saml' => 'Saml',
+            'Shibboleth' => 'Shibboleth',
+            'WordPress' => 'WordPress'
+        ],
+        'label' => 'Authentication Plugin',
+        'description' => 'Plugin used for authentication',
+        'config_file_comment' => 'Plugin class name to use for authentication',
+        'section' => 'plugins'
+    ];
+    public const PLUGIN_AUTHORIZATION = [
+        'key' => 'plugins.authorization',
+        'type' => 'string',
+        'default' => '',
+        'allow_custom' => true,
+        'choices' => [
+            '' => 'None',
+        ],
+        'label' => 'Authorization Plugin',
+        'description' => 'Plugin used for authorization',
+        'config_file_comment' => 'Plugin class name to use for authorization',
+        'section' => 'plugins'
+    ];
+    public const PLUGIN_EXPORT = [
+        'key' => 'plugins.export',
+        'type' => 'string',
+        'default' => '',
+        'allow_custom' => true,
+        'choices' => [
+            '' => 'None',
+        ],
+        'label' => 'Export Plugin',
+        'description' => 'Plugin used for exporting data',
+        'config_file_comment' => 'Plugin class name to handle data export',
+        'section' => 'plugins'
+    ];
+    public const PLUGIN_PERMISSION = [
+        'key' => 'plugins.permission',
+        'type' => 'string',
+        'default' => '',
+        'allow_custom' => true,
+        'choices' => [
+            '' => 'None',
+        ],
+        'label' => 'Permission Plugin',
+        'description' => 'Plugin used for permission management',
+        'config_file_comment' => 'Plugin class name for permission management',
+        'section' => 'plugins'
+    ];
+    public const PLUGIN_POSTREGISTRATION = [
+        'key' => 'plugins.postregistration',
+        'type' => 'string',
+        'default' => '',
+        'allow_custom' => true,
+        'choices' => [
+            '' => 'None',
+        ],
+        'label' => 'Post-Registration Plugin',
+        'description' => 'Plugin used after user registration',
+        'config_file_comment' => 'Plugin class name to run after user registration',
+        'section' => 'plugins'
+    ];
+    public const PLUGIN_PRERESERVATION = [
+        'key' => 'plugins.prereservation',
+        'type' => 'string',
+        'default' => '',
+        'allow_custom' => true,
+        'choices' => [
+            '' => 'None',
+            'AdminCheckOnly' => 'AdminCheckOnly',
+            'PreReservationExample' => 'PreReservationExample',
+        ],
+        'label' => 'Pre-Reservation Plugin',
+        'description' => 'Plugin used before making a reservation',
+        'config_file_comment' => 'Plugin class name to run before reservation creation',
+        'section' => 'plugins'
+    ];
+    public const PLUGIN_POSTRESERVATION = [
+        'key' => 'plugins.postreservation',
+        'type' => 'string',
+        'default' => '',
+        'allow_custom' => true,
+        'choices' => [
+            '' => 'None',
+            'PostReservationExample' => 'PostReservationExample',
+        ],
+        'label' => 'Post-Reservation Plugin',
+        'description' => 'Plugin used after making a reservation',
+        'config_file_comment' => 'Plugin class name to run after reservation is created/updated',
+        'section' => 'plugins'
+    ];
+    public const PLUGIN_STYLING = [
+        'key' => 'plugins.styling',
+        'type' => 'string',
+        'default' => '',
+        'allow_custom' => true,
+        'choices' => [
+            '' => 'None',
+        ],
+        'label' => 'Styling Plugin',
+        'description' => 'Plugin used for custom styling',
+        'config_file_comment' => 'Plugin class name to apply custom styling logic',
+        'section' => 'plugins'
+    ];
+
+    // API Configuration
+
+    public const API_ENABLED = [
+        'key' => 'api.enabled',
+        'type' => 'boolean',
+        'default' => false,
+        'label' => 'Enable API',
+        'description' => 'Enable or disable the API',
+        'section' => 'api'
+    ];
+    public const API_REGISTRATION_ALLOW_SELF = [
+        'key' => 'api.registration.allow.self',
+        'legacy' => 'api.allow.self.registration',
+        'type' => 'boolean',
+        'default' => false,
+        'label' => 'Allow API Self Registration',
+        'description' => 'Allow users to self-register via the API',
+        'section' => 'api'
+    ];
+    public const API_AUTHENTICATION_GROUP = [
+        'key' => 'api.authentication.group',
+        'type' => 'string',
+        'default' => '',
+        'label' => 'API Authentication Group',
+        'description' => 'Group required for API authentication',
+        'config_file_comment' => "If set, a user must belong to this group to authenticate via the API\nAdmin users are exempt",
+        'section' => 'api'
+    ];
+    public const API_ACCESSORIES_RO_GROUP = [
+        'key' => 'api.accessories.ro.group',
+        'type' => 'string',
+        'default' => '',
+        'label' => 'API Accessories Read-Only Group',
+        'description' => 'Group with read-only access to accessories via API',
+        'config_file_comment' => "Restrict read-only access to Accessories via API to this group\nNOTE: There are no write APIs for Accessories",
+        'section' => 'api'
+    ];
+    public const API_ACCOUNTS_RO_GROUP = [
+        'key' => 'api.accounts.ro.group',
+        'type' => 'string',
+        'default' => '',
+        'label' => 'API Accounts Read-Only Group',
+        'description' => 'Group with read-only access to accounts via API',
+        'config_file_comment' => 'Restrict read-only access to Accounts via API to this group',
+        'section' => 'api'
+    ];
+    public const API_ACCOUNTS_RW_GROUP = [
+        'key' => 'api.accounts.rw.group',
+        'type' => 'string',
+        'default' => '',
+        'label' => 'API Accounts Read-Write Group',
+        'description' => 'Group with read-write access to accounts via API',
+        'config_file_comment' => 'Restrict read-write access to Accounts via API to this group',
+        'section' => 'api'
+    ];
+    public const API_ATTRIBUTES_RO_GROUP = [
+        'key' => 'api.attributes.ro.group',
+        'type' => 'string',
+        'default' => '',
+        'label' => 'API Attributes Read-Only Group',
+        'description' => 'Group with read-only access to attributes via API',
+        'config_file_comment' => "Restrict read-only access to Attributes via API to this group\nNOTE: Only application administrators can modify Attributes",
+        'section' => 'api'
+    ];
+    public const API_GROUPS_RO_GROUP = [
+        'key' => 'api.groups.ro.group',
+        'type' => 'string',
+        'default' => '',
+        'label' => 'API Groups Read-Only Group',
+        'description' => 'Group with read-only access to groups via API',
+        'config_file_comment' => "Restrict read-only access to Groups via API to this group\nNOTE: Only application administrators can modify Groups",
+        'section' => 'api'
+    ];
+    public const API_RESERVATIONS_RO_GROUP = [
+        'key' => 'api.reservations.ro.group',
+        'type' => 'string',
+        'default' => '',
+        'label' => 'API Reservations Read-Only Group',
+        'description' => 'Group with read-only access to reservations via API',
+        'config_file_comment' => 'Restrict read-only access to Reservations via API to this group',
+        'section' => 'api'
+    ];
+    public const API_RESERVATIONS_RW_GROUP = [
+        'key' => 'api.reservations.rw.group',
+        'type' => 'string',
+        'default' => '',
+        'label' => 'API Reservations Read-Write Group',
+        'description' => 'Group with read-write access to reservations via API',
+        'config_file_comment' => 'Restrict read-write access to Reservations via API to this group',
+        'section' => 'api'
+    ];
+    public const API_RESOURCES_RO_GROUP = [
+        'key' => 'api.resources.ro.group',
+        'type' => 'string',
+        'default' => '',
+        'label' => 'API Resources Read-Only Group',
+        'description' => 'Group with read-only access to resources via API',
+        'config_file_comment' => "Restrict read-only access to Resources via API to this group\nNOTE: Only application administrators can modify Resources",
+        'section' => 'api'
+    ];
+    public const API_SCHEDULES_RO_GROUP = [
+        'key' => 'api.schedules.ro.group',
+        'type' => 'string',
+        'default' => '',
+        'label' => 'API Schedules Read-Only Group',
+        'description' => 'Group with read-only access to schedules via API',
+        'config_file_comment' => "Restrict read-only access to Schedules via API to this group\nNOTE: There are no write APIs for Schedules",
+        'section' => 'api'
+    ];
+    public const API_USERS_RO_GROUP = [
+        'key' => 'api.users.ro.group',
+        'type' => 'string',
+        'default' => '',
+        'label' => 'API Users Read-Only Group',
+        'description' => 'Group with read-only access to users via API',
+        'config_file_comment' => "Restrict read-only access to Users via API to this group\nNOTE: Only application administrators can modify Users",
+        'section' => 'api'
+    ];
+
+}
+
+class ConfigSettingType
+{
+    public const String = 'string';
+    public const Boolean = 'boolean';
+    public const Integer = 'integer';
+}

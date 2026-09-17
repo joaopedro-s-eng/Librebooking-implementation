@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- doc: https://phpunit.readthedocs.io/en/latest/configuration.html -->
+<!-- manpage: https://manpages.debian.org/testing/phpunit/phpunit.1.en.html -->
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" bootstrap="./tests/autoload.php" backupGlobals="false" colors="true" processIsolation="false" stopOnFailure="false" defaultTestSuite="all" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/11.3/phpunit.xsd" cacheDirectory=".phpunit.cache" backupStaticProperties="false">
+  <!-- organizing tests: https://phpunit.readthedocs.io/en/latest/organizing-tests.html -->
+  <testsuites>
+    <!-- https://phpunit.readthedocs.io/en/latest/configuration.html#the-testsuite-element -->
+    <!-- run only specificed tests: 'phpunit -_-filter [path/to/*Test.php / folder with tests]' -->
+    <!-- run only a specific testsuite: 'phpunit -_-testsuite <testsuite-name>' -->
+    <testsuite name="all">
+      <directory>./tests</directory>
+      <exclude>./tests/Integration</exclude>
+    </testsuite>
+    <testsuite name="application">
+      <directory>./tests/Application</directory>
+    </testsuite>
+    <testsuite name="domain">
+      <directory>./tests/Domain</directory>
+    </testsuite>
+    <testsuite name="plugins">
+      <directory>./tests/Plugins</directory>
+    </testsuite>
+    <testsuite name="presenters">
+      <directory>./tests/Presenters</directory>
+    </testsuite>
+    <testsuite name="src">
+      <directory>./tests/src</directory>
+    </testsuite>
+    <testsuite name="webservice">
+      <directory>./tests/WebService</directory>
+    </testsuite>
+    <testsuite name="webservices">
+      <directory>./tests/WebServices</directory>
+    </testsuite>
+    <testsuite name="integration">
+      <directory>./tests/Integration</directory>
+    </testsuite>
+  </testsuites>
+  <!--  to generate coverage report: phpunit -_-coverage-html ./var/ -->
+  <php>
+    <env name="APP_ENV" value="testing"/>
+  </php>
+  <source>
+    <include>
+      <directory suffix=".php">Controls</directory>
+      <directory suffix=".php">Domain</directory>
+      <directory suffix=".php">Jobs</directory>
+      <directory suffix=".php">lib</directory>
+      <directory suffix=".php">Pages</directory>
+      <directory suffix=".php">plugins</directory>
+      <directory suffix=".php">Presenters</directory>
+      <directory suffix=".php">src</directory>
+      <directory suffix=".php">Web</directory>
+      <directory suffix=".php">WebServices</directory>
+    </include>
+    <exclude>
+      <directory suffix=".php">lib/external</directory>
+    </exclude>
+  </source>
+</phpunit>

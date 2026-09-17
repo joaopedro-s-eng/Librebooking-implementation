@@ -1,0 +1,71 @@
+name: librebooking
+
+services:
+  proxy:
+     image: ${DOCKER_PROXY_IMAGE:-nginxproxy/nginx-proxy}:${DOCKER_PROXY_TAG:-latest}
+     restart: always
+     ports:
+       - 80:80
+       - 443:443
+     volumes:
+       - proxy_certs:/etc/nginx/certs
+       - proxy_html:/usr/share/nginx/html
+       - /var/run/docker.sock:/tmp/docker.sock:ro
+    env_file:
+      - proxy.env
+  acme:
+    image: ${DOCKER_ACME_IMAGE:-nginxproxy/acme-companion}:${DOCKER_ACME_TAG:-latest}
+    restart: always
+    depends_on:
+      - proxy
+    volumes_from:
+      - proxy
+    volumes:
+      - acme_acme:/etc/acme.sh
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    environment:
+      - DEFAULT_EMAIL=john.doe@acme.org
+  db:
+    image: ${DOCKER_DB_IMAGE:-linuxserver/mariadb}:${DOCKER_DB_TAG:-10.6.13}
+    restart: always
+    volumes:
+      - db_conf:/config
+    environment:
+      - FILE__MYSQL_ROOT_PASSWORD=/run/secrets/db_root_pwd
+    env_file:
+      - db.env
+  app:
+    image: ${DOCKER_APP_IMAGE:-librebooking/librebooking}:${DOCKER_APP_TAG:-develop}
+    restart: always
+    depends_on:
+      - db
+    volumes:
+      - app_conf:/config
+      - app_img:/var/www/html/Web/uploads/images
+      - app_res:/var/www/html/Web/uploads/reservation
+      - ./crontab:/config/lb-jobs-cron:ro
+    env_file:
+      - lb.env
+    environment:
+      - VIRTUAL_HOST=acme.org
+      - VIRTUAL_PORT=8080
+      - LETSENCRYPT_HOST=acme.org
+  cron:
+    image: ${DOCKER_APP_IMAGE:-librebooking/librebooking}:${DOCKER_APP_TAG:-develop}
+    restart: always
+    depends_on:
+      - app
+    command: supercronic /config/lb-jobs-cron
+    volumes_from:
+      - app
+    env_file:
+      - lb.env
+
+volumes:
+  proxy_certs:
+  proxy_html:
+  acme_acme:
+  db_conf:
+  app_conf:
+  app_img:
+  app_res:

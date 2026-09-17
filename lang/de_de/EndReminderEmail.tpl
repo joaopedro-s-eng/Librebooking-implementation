@@ -1,0 +1,13 @@
+Ihre Reservierung endet bald.<br/>
+Reservierungsdetails:<br/>
+	<br/>
+	Start: {formatdate date=$StartDate key=reservation_email}<br/>
+	Ende: {formatdate date=$EndDate key=reservation_email}<br/>
+	Ressource: {$ResourceName}<br/>
+	Titel: {$Title}<br/>
+	Beschreibung: {$Description|nl2br}<br/>
+<br/>
+<p><a href="{$ScriptUrl}/{$ReservationUrl}">Reservierung ansehen</a> |
+<a href="{$ScriptUrl}/{$ICalUrl}">Zum Kalender hinzuf&uuml;gen</a> |
+<a href="{$ScriptUrl}">{$AppTitle}-Anmeldung</a></p>
+

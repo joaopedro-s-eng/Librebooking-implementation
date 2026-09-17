@@ -1,0 +1,71 @@
+/vendor/*
+/node_modules/
+
+/build/*
+/tools/*
+/var/*
+
+# Customized Configuration Files
+/config/config.php
+/config/log4php.config.xml
+/config/custom-version.txt
+/config/version-suffix.txt
+**/*.config.php
+
+/lib/external/phpqrcode/cache/*
+!/lib/external/phpqrcode/cache/index.html
+
+/plugins/*
+!/plugins/Authentication
+!/plugins/**/index.html
+!/plugins/**/*Example/*
+
+# Smarty Cache / compiled templates
+/tpl_c/*
+!/tpl_c/index.html
+
+# Customization Files
+/Web/custom-favicon.png
+/Web/img/custom-logo.png
+lang/*/*-custom.tpl
+
+# Upload Directories
+/uploads/*
+!/uploads/index.html
+
+/Web/uploads/images/*
+!/Web/uploads/images/index.html
+/Web/uploads/tos/*
+!/Web/uploads/tos/index.html
+
+/Web/test-embed.html
+
+# /phpunit.xml.dist is tracked
+/phpunit.xml
+
+# /.php-cs-fixer.dist.php is tracked
+.php-cs-fixer.php
+
+/.phpdoc
+# /phpdoc.dist.xml is tracked
+/phpdoc.xml
+
+# Editor Cache Files
+.idea
+
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+*.sublime-workspace
+
+.DS_Store
+
+# php8 phpcompatibility report
+php8-report.log
+
+# phpunit cache
+.phpunit.cache/
+.env

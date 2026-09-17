@@ -1,0 +1,12 @@
+#!/bin/bash
+
+PROCS=$(nproc)  # use the number of processors on the system
+JOBS="${PHP_LINT_JOBS:-${PROCS}}"
+
+echo "Using ${JOBS} processes to run php linting"
+
+find . -name '*.php' \
+    -not -path './vendor/*' \
+    -not -path './tmp/*' \
+    -not -path './node_modules/*' \
+    -print0 | xargs --null --no-run-if-empty --max-args=1 --max-procs="$JOBS" php -l

@@ -1,0 +1,482 @@
+table.reservations {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 0.85em;
+  position: relative;
+  table-layout: fixed;
+}
+
+table.reservations thead td {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 50px;
+  z-index: 100;
+  background-clip: padding-box;
+}
+
+table.reservations td {
+  border: solid var(--color-lines) 1px;
+  height: 40px;
+  display: table-cell;
+  padding: 0;
+}
+
+table.reservations td.resourcename {
+  padding: 0 3px;
+  background-color: #ededed;
+  color: var(--label-text-on-light);
+  width: 150px;
+  height: 40px;
+  max-width: 100%;
+  margin: 0 auto;
+  line-height: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+table.reservations td.resourcename a {
+  color: #0772a1;
+  text-decoration: none;
+}
+
+table.reservations td.resourcename a:hover {
+  color: #3ba3d0;
+}
+
+table.reservations td.resdate {
+  width: 150px;
+  padding: 0 3px;
+  background-color: color-mix(in srgb, var(--reserved) 60%, black);
+  color: #f0f0f0;
+}
+
+table.reservations tr.today td.resdate,
+table.reservations td.today {
+  color: var(--label-text-on-light);
+  background-color: #5199d1;
+}
+
+table.reservations tr.today td.reslabel {
+  background-color: #cfcfcf;
+}
+
+table.reservations td.reslabel {
+  padding-left: 2px;
+  background-color: #ededed;
+  color: var(--label-text-on-light);
+}
+
+table.reservations tr.today td.reslabel {
+  color: var(--label-text-on-light);
+}
+
+table.reservations.reservations-tall {
+  table-layout: auto;
+}
+
+@media only screen and (max-width: 768px) {
+  table.reservations thead td {
+    top: 0;
+  }
+}
+
+table.reservations.mobile {
+  table-layout: fixed;
+}
+
+table.reservations.mobile div.reservable {
+  border: dashed 1px #585754;
+  color: #585754;
+  line-height: 20px;
+  background-color: #fff;
+  padding-left: 3px;
+  margin: 2px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+}
+
+.reservations.condensed td.resdate {
+  width: auto;
+  min-width: 120px;
+}
+
+.reservations.condensed .reserved,
+.reservations.condensed .unreservable,
+.reservations.condensed div.reservable {
+  padding: 3px;
+  margin: 2px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.reservations.condensed div.reservable {
+  border: dashed 1px #585754;
+  color: #585754;
+  background-color: #fff;
+}
+
+.reservations.condensed div.reservable:hover {
+  background-color: #e9e9e9;
+}
+
+#reservations .mobile {
+  font-size: 0.8em;
+}
+
+#reservations .mobile .resdate {
+  background-color: #4279a5;
+  width: auto;
+}
+
+#reservations .mobile td.today {
+  background-color: #5199d1;
+}
+
+#reservations .mobile .slot {
+  padding: 2px;
+}
+
+.slot {
+  min-width: 1px;
+  max-width: 1px;
+  overflow: hidden;
+}
+
+.event,
+.buffer {
+  overflow: hidden;
+  position: absolute;
+  background-color: #000;
+  height: 40px;
+  z-index: 2;
+  border-top: solid 1px var(--color-lines);
+  border-left: solid 1px var(--color-lines);
+  border-bottom: solid 1px var(--color-lines);
+  border-right: solid 1px var(--color-lines);
+  border-collapse: separate;
+  padding: 2px 5px;
+}
+
+.buffer {
+  z-index: 1;
+}
+
+.condensed-event {
+  border-width: 1px;
+  border-style: solid;
+}
+
+.unreservable,
+.buffer {
+  background-color: var(--unreservable);
+  color: var(--label-text-on-light);
+}
+
+td.reservable,
+div.reservable {
+  background-color: var(--reservable);
+}
+
+.reserved {
+  background-color: var(--reserved);
+  color: var(--label-text-on-light);
+  cursor: pointer;
+}
+
+td.reserved {
+  padding-left: 1px;
+}
+
+@keyframes droppedpulse {
+  0%,
+  100% {
+    background-color: #6f9b;
+  }
+
+  50% {
+    background-color: transparent;
+  }
+}
+
+td.dropped {
+  animation: droppedpulse 1s infinite;
+}
+
+.reserved.hilite {
+  background-color: color-mix(in srgb, var(--reserved), white 30%);
+}
+
+.reserved.mine {
+  background-color: var(--reservedMine);
+  color: var(--label-text-on-light);
+}
+
+.reserved.mine.hilite {
+  background-color: color-mix(in srgb, var(--reservedMine), white 30%);
+  color: var(--label-text-on-light);
+}
+
+.reserved.participating {
+  background-color: var(--reservedParticipating);
+  color: var(--label-text-on-dark);
+}
+
+.reserved.participating.hilite {
+  background-color: color-mix(in srgb, var(--reservedParticipating), white 30%);
+}
+
+.past {
+  background-color: color-mix(in srgb, var(--reserved), white 40%);
+}
+
+.reserved.pending {
+  background-color: var(--reservedPending);
+  color: var(--label-text-on-light);
+}
+
+.reserved.pending.hilite {
+  background-color: color-mix(in srgb, var(--reservedPending), white 30%);
+}
+
+.reservable.hilite,
+#reservations .ui-selecting {
+  background-color: var(--hiliteReservation);
+  color: var(--label-text-on-light);
+}
+
+.hilite {
+  cursor: pointer;
+}
+
+.reservable.clicked,
+#reservations .ui-selected {
+  background-color: var(--hiliteReservation);
+}
+
+.reserved.clicked {
+  background-color: #1979cf;
+}
+
+.pasttime {
+  background-color: var(--pasttime);
+}
+
+.restricted {
+  background:
+    repeating-linear-gradient(45deg, transparent, transparent 10px, #ccc 10px, #ccc 20px),
+    linear-gradient(to bottom, #eee, #999);
+  color: var(--label-text-on-light);
+}
+
+.schedule_title {
+  text-align: center;
+  vertical-align: top;
+}
+
+.removeSpecificDate {
+  cursor: pointer;
+}
+
+.ui-datepicker {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.res_popup_details {
+  min-width: 450px;
+}
+
+.res_popup_details .summary {
+  font-style: italic;
+}
+
+.res_popup_details .user {
+  font-weight: bold;
+}
+
+.res_popup_details .pendingApproval {
+  color: var(--reservedPending);
+  font-weight: bold;
+}
+
+table.reservations td.resourcename.hilite {
+  background-color: #fbffc2;
+}
+
+div.legend {
+  width: 110px;
+  text-align: center;
+  margin: 0 2px;
+  cursor: default;
+  color: var(--label-text-on-light);
+}
+
+.reservations-left-header {
+  font-size: 1.3em;
+}
+
+.reservations-left-content {
+  padding: 10px;
+}
+
+ul.jqtree-tree .jqtree-title-button-left {
+  margin-bottom: 6px;
+}
+
+ul.jqtree-tree li.jqtree-selected > .jqtree-element,
+ul.jqtree-tree li.jqtree-selected > .jqtree-element:hover {
+  background: none;
+  font-weight: bold;
+}
+
+ul.jqtree-tree .jqtree-toggler {
+  top: 10%;
+}
+
+.schedule-style.active {
+  border-bottom: 2px solid var(--primary);
+  padding-bottom: 6px;
+  margin-bottom: 2px;
+}
+
+.table-cell-wrapper {
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+
+.advancedFilterTitle {
+  margin-top: 10px;
+  text-align: center;
+}
+
+@media only screen and (min-width: 768px) {
+  #reservations-left {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 50px;
+    z-index: 100;
+  }
+}
+
+#reservations-left .btn {
+  width: 100%;
+  margin-bottom: 6px;
+}
+
+#reservations-left .textbox {
+  width: 120px;
+}
+
+#reservations-left select.textbox,
+#reservations-left textarea,
+#reservations-left .button {
+  width: 128px;
+}
+
+#reservations-left .form-group {
+  margin-bottom: 3px;
+}
+
+#reservations-left .btn-clear {
+  margin-top: 3px;
+}
+
+#reservations-left ul.jqtree-tree li.jqtree-selected > .jqtree-element,
+#reservations-left ul.jqtree-tree li.jqtree-selected > .jqtree-element:hover {
+  background-color: transparent;
+  background: none;
+}
+
+#calendar_toggle {
+  padding-left: 5px;
+}
+
+.schedule_icon {
+  height: 24px;
+  width: auto;
+  font-size: 24px;
+}
+
+img.schedule_icon {
+  display: block;
+}
+
+#loading-schedule {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 101;
+  display: inline-block;
+}
+
+.reservations.mobile .reserved {
+  -webkit-border-radius: 1px;
+  -moz-border-radius: 1px;
+  border-radius: 1px;
+  padding: 1px 2px;
+  margin: 1px;
+}
+
+.no-resource-warning {
+  padding: 10px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+}
+
+#showFullWeek {
+  display: block;
+}
+
+.schedule-legend {
+  margin-bottom: 10px;
+}
+
+#individualDatesGo {
+  display: none;
+}
+
+#individualDatesList {
+  display: none;
+}
+
+#individualDatesList div {
+  display: inline-block;
+  padding-right: 5px;
+}
+
+#scheduleListDropdown .caret {
+  margin-left: 0;
+  border-top: 8px dashed;
+  border-right: 8px solid transparent;
+  border-left: 8px solid transparent;
+}
+
+.reservation-new,
+.reservation-updated {
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  background-color: #88cc88;
+  padding: 2px;
+  margin: 1px;
+  color: #000;
+  display: inline-block;
+  line-height: 1rem;
+}
+
+.reservation-updated {
+  background-color: #d5ded9;
+  color: #000;
+}
+
+#reservations {
+  position: relative;
+}
