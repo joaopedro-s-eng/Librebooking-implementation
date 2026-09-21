@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<phive xmlns="https://phar.io/phive">
-  <phar name="phing" version="^3.0.0-RC3" installed="3.0.0-RC3" location="./tools/phing" copy="true"/>
-  <phar name="phpdocumentor" version="^3.1.2" installed="3.1.2" location="./tools/phpdocumentor" copy="true"/>
-</phive>
