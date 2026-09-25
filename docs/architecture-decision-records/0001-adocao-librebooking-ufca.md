@@ -16,11 +16,15 @@ Foi decidido adotar e customizar o **LibreBooking** (um fork open-source do anti
 
 A escolha se justifica porque o LibreBooking já é semelhante ao sistema anterior, porém é mais atualizado, seguro, possui uma comunidade forte e é bem escalável. Torna-se imprescindível a adoção desse sistema para que a instituição não deixe a desejar nesse aspecto de gestão e tenha independência tecnológica. Com o LibreBooking, é possível manter a plataforma atualizada não só pela própria comunidade enviando atualizações, mas também pelos técnicos da própria instituição.
 
+Além disso, a migração de dados do sistema legado (Booked) é suportada nativamente pelo processo de upgrade do próprio projeto. Sendo o LibreBooking a continuação direta do Booked, a migração ocorre através da execução de scripts de upgrade incrementais diretamente no banco de dados, eliminando a necessidade de migrar dados manualmente entre schemas diferentes (ETL).
+
 ## Consequências
 
 * **Positivas:**
   * **Independência e Economia:** Não é necessário pagar por um plano fechado, dando total controle para a UFCA.
   * **Evolução Colaborativa:** Possibilidade de receber atualizações da comunidade open-source e realizar modificações internas.
   * **Familiaridade:** Como é um fork do sistema legado utilizado, possui forte semelhança, facilitando a migração.
+  * **Migração Nativa:** A transição dos dados dispensa processos complexos (ETL), pois o upgrade do banco de dados é nativamente suportado pela ferramenta.
 * **Negativas / Desafios:**
   * A equipe precisará dedicar tempo para compreender a arquitetura (em PHP) do LibreBooking antes de conseguir implementar as integrações profundas com a infraestrutura da UFCA de forma segura.
+  * O ambiente legado deverá ser avaliado antes do upgrade, uma vez que o LibreBooking atual exige banco de dados (MySQL ≥8.0 ou MariaDB ≥10.6) e PHP (≥8.2) em versões recentes, podendo exigir uma atualização de infraestrutura prévia.
