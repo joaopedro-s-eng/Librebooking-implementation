@@ -224,11 +224,17 @@ class ProfilePage extends ActionPage implements IProfilePage
      */
     public function SetAllowedActions($options)
     {
-        $this->Set('AllowEmailAddressChange', $options->AllowEmailAddressChange());
-        $this->Set('AllowNameChange', $options->AllowNameChange());
-        $this->Set('AllowOrganizationChange', $options->AllowOrganizationChange());
-        $this->Set('AllowPhoneChange', $options->AllowPhoneChange());
-        $this->Set('AllowPositionChange', $options->AllowPositionChange());
-        $this->Set('AllowUsernameChange', $options->AllowUsernameChange());
+        $this->Set('AllowEmailAddressChange', false);
+        // $options->AllowEmailAddressChange(),
+        $this->Set('AllowNameChange', false);
+        // $options->AllowNameChange()
+        $this->Set('AllowOrganizationChange', false);
+        // $options->AllowOrganizationChange()
+        $this->Set('AllowPhoneChange', false);
+        // $options->AllowPhoneChange()
+        $this->Set('AllowPositionChange', false);
+        // $options->AllowPositionChange()
+        $this->Set('AllowUsernameChange', false);
+        // $options->AllowUsernameChange()
     }
 }

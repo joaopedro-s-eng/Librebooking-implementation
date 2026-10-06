@@ -157,8 +157,9 @@
                                 <ul class="dropdown-menu">
                                     <li id="navProfile"><a class="dropdown-item"
                                             href="{$Path}{Pages::PROFILE}">{translate key="Profile"}</a></li>
-                                    <li id="navPassword"><a class="dropdown-item"
-                                            href="{$Path}{Pages::PASSWORD}">{translate key="ChangePassword"}</a></li>
+
+                                   {* <li id="navPassword"><a class="dropdown-item" href="{$Path}{Pages::PASSWORD}">{translate key="ChangePassword"}</a></li> *}
+
                                     <li id="navNotification">
                                         <a class="dropdown-item"
                                             href="{$Path}{Pages::NOTIFICATION_PREFERENCES}">{translate key="NotificationPreferences"}</a>

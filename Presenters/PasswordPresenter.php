@@ -35,7 +35,8 @@ class PasswordPresenter
         $this->page->SetAllowedActions(PluginManager::Instance()->LoadAuthentication());
 
         if ($this->page->ResettingPassword()) {
-            $this->LoadValidators();
+            
+             $this->LoadValidators();
 
             if ($this->page->IsValid()) {
                 $this->page->EnforceCSRFCheck();
