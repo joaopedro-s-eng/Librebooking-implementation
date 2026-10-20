@@ -214,6 +214,7 @@ class SmartyPage extends Smarty
         $this->registerPlugin('function', 'add_querystring', $this->AddQueryString(...));
         $this->registerPlugin('function', 'resource_image', $this->GetResourceImage(...));
         $this->registerPlugin('modifier', 'escapequotes', $this->EscapeQuotes(...));
+        $this->registerPlugin('modifier', 'escape_csv', $this->EscapeCsv(...));
         $this->registerPlugin('modifier', 'sanitize_rich_text', $this->SanitizeRichText(...));
         $this->registerPlugin('function', 'flush', $this->Flush(...));
         $this->registerPlugin('function', 'jsfile', $this->IncludeJavascriptFile(...));
@@ -796,6 +797,9 @@ class SmartyPage extends Smarty
         return "[\"$string\"]";
     }
 
+    /**
+     * Pass csv=true to escape the name for a double-quoted CSV field instead of HTML.
+     */
     public function DisplayFullName($params, $smarty)
     {
         $config = Configuration::Instance();
@@ -803,6 +807,7 @@ class SmartyPage extends Smarty
         if (isset($params['ignorePrivacy']) && strtolower($params['ignorePrivacy'] == 'true')) {
             $ignorePrivacy = true;
         }
+        $csv = filter_var($params['csv'] ?? false, FILTER_VALIDATE_BOOLEAN);
 
         if (
             !$ignorePrivacy && $config->GetKey(
@@ -810,10 +815,15 @@ class SmartyPage extends Smarty
                 new BooleanConverter()
             ) && !ServiceLocator::GetServer()->GetUserSession()->IsAdmin
         ) {
-            return $this->Resources->GetString('Private');
+            $private = $this->Resources->GetString('Private');
+            return $csv ? $this->EscapeCsv($private) : $private;
         }
 
         $fullName = new FullName($params['first'], $params['last']);
+
+        if ($csv) {
+            return $this->EscapeCsv($fullName->__toString());
+        }
 
         return htmlspecialchars($fullName->__toString());
     }
@@ -842,6 +852,15 @@ class SmartyPage extends Smarty
     {
         $str = str_replace('\'', '&#39;', $var);
         return str_replace('"', '&quot;', $str);
+    }
+
+    /**
+     * Escapes a value for use inside a double-quoted CSV field (RFC 4180) by
+     * doubling embedded double quotes. The template supplies the enclosing quotes.
+     */
+    public function EscapeCsv(mixed $value): string
+    {
+        return str_replace(search: '"', replace: '""', subject: (string)$value);
     }
 
     public function SanitizeRichText(?string $html): string

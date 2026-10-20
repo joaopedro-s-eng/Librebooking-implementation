@@ -92,7 +92,7 @@ class Configuration implements IConfiguration
     public const DEFAULT_CONFIG_ID = 'librebooking';
     public const CONFIG_FILE_PATH = ROOT_DIR . 'config/config.php';
     public const ENV_FILE_PATH = ROOT_DIR . '.env';
-    public const VERSION = '5.3.0';
+    public const VERSION = '7.1.0';
 
     protected function __construct()
     {
@@ -527,7 +527,7 @@ class ConfigurationFile implements IConfigurationFile
         $envKey = ConfigKeysMeta::envKeyForConfig(config: $configKey);
         $envValue = $envKey !== null ? env($envKey) : null;
 
-        if (!empty($envValue)) {
+        if ($envValue !== null && $envValue !== '') {
             $value = $envValue;
         } elseif ($section !== null && $section !== '') {
             $sectionKey = str_starts_with($fullKey, $section . '.') ? substr($fullKey, strlen($section) + 1) : $fullKey;
