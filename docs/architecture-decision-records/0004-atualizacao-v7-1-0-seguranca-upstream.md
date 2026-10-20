@@ -2,7 +2,7 @@
 
 | Metadado | Detalhe |
 | :--- | :--- |
-| **Status** | ![Status: Proposto](https://img.shields.io/badge/Status-Proposto-yellow?style=flat-square) |
+| **Status** | ![Status: Aceito](https://img.shields.io/badge/Status-Aceito-success?style=flat-square) |
 | **Data da Decisão** | 2026-10-19 |
 | **Decisores** | Equipe de Tecnologia da Informação / DTI UFCA |
 | **Stakeholders** | Administradores do Sistema, Usuários Finais da UFCA, Gestores de Infraestrutura e Redes |
