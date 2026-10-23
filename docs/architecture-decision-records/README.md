@@ -21,7 +21,8 @@ A adoção do padrão de ADRs garante que o conhecimento técnico e os "porquês
 | [0001](./0001-adocao-librebooking-ufca.md) | Adoção do LibreBooking para Gestão e Agendamento de Recursos na UFCA | ![Aceito](https://img.shields.io/badge/Aceito-success?style=flat-square) | 2024-09-24 |
 | [0002](./0002-perfil-usuario-modo-somente-leitura.md) | Perfil de Usuário em Modo Somente Leitura sob Autenticação Federada | ![Aceito](https://img.shields.io/badge/Aceito-success?style=flat-square) | 2024-09-30 |
 | [0003](./0003-bloqueio-troca-senha-local.md) | Bloqueio da Funcionalidade de Troca de Senha Local sob Autenticação Federada | ![Aceito](https://img.shields.io/badge/Aceito-success?style=flat-square) | 2024-10-01 |
-| [0004](./0004-atualizacao-v7-1-0-seguranca-upstream.md) | Atualização para LibreBooking v7.1.0 e Mitigação de Vulnerabilidades Críticas | ![Proposto](https://img.shields.io/badge/Proposto-yellow?style=flat-square) | 2026-10-19 |
+| [0004](./0004-atualizacao-v7-1-0-seguranca-upstream.md) | Atualização para LibreBooking v7.1.0 e Mitigação de Vulnerabilidades Críticas | ![Aceito](https://img.shields.io/badge/Aceito-success?style=flat-square) | 2026-10-19 |
+| [0005](./0005-correcao-race-condition-reserva-dupla.md) | Correção de Race Condition (Reserva Dupla) no ReservationHandler | ![Aceito](https://img.shields.io/badge/Aceito-success?style=flat-square) | 2026-10-21 |
 
 ---
 

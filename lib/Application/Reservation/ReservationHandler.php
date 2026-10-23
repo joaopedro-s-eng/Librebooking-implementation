@@ -86,38 +86,126 @@ class ReservationHandler implements IReservationHandler
      * @return bool if the reservation was handled or not
      * @throws Exception
      */
-    public function Handle($reservationSeries, IReservationSaveResultsView $view)
-    {
-        $this->retryOptions->AdjustReservation($reservationSeries, $view->GetRetryParameters());
-        $validationResult = $this->validationService->Validate($reservationSeries, $view->GetRetryParameters());
-        $result = $validationResult->CanBeSaved();
 
-        if ($validationResult->CanBeSaved()) {
+        public function Handle($reservationSeries, IReservationSaveResultsView $view)
+        {
+
+            $lockHandles = [];
+
             try {
-                $this->persistenceService->Persist($reservationSeries);
-            } catch (Exception $ex) {
-                Log::Error('Error saving reservation: %s', $ex);
-                throw($ex);
+                // 1. Coleta e ordena os IDs dos recursos para evitar deadlocks
+                if (method_exists($reservationSeries, 'AllResources')) {
+                    $resourceIds = [];
+                    foreach ($reservationSeries->AllResources() as $resource)
+  {
+                        $resourceIds[] = $resource->GetId();
+                    }
+                    sort($resourceIds); // Garante que múltiplas requisições travem na mesma ordem
+
+                    $lockDir = sys_get_temp_dir() . '/librebooking_locks';
+                    if (!is_dir($lockDir)) {
+                        @mkdir($lockDir, 0777, true);
+                    }
+
+                    // 2. Adquire trava exclusiva no nível do sistema operacional para cada recurso
+                    foreach ($resourceIds as $resId) {
+                        $fp = fopen($lockDir . '/resource_' . $resId . '.lock', 'c');
+                        if ($fp) {
+                            flock($fp, LOCK_EX); // Aguarda na fila se outro processo estiver reservando este recurso
+                            $lockHandles[] = $fp;
+                        }
+                    }
+                }
+
+                // 3. Validação segura: ninguém consegue inserir enquanto este bloco executa
+                $this->retryOptions->AdjustReservation($reservationSeries, $view->GetRetryParameters());
+                $validationResult = $this->validationService->Validate($reservationSeries, $view->GetRetryParameters());
+                $result = $validationResult->CanBeSaved();
+
+                if ($validationResult->CanBeSaved()) {
+                    try {
+                        $this->persistenceService->Persist($reservationSeries);
+                    } catch (Exception $ex) {
+                        Log::Error('Error saving reservation: %s', $ex);
+                        throw($ex);
+                    }
+
+                    $this->notificationService->Notify($reservationSeries);
+
+                    $view->SetSaveSuccessfulMessage($result);
+                } else {
+                    $view->SetSaveSuccessfulMessage($result);
+                    $view->SetErrors($validationResult->GetErrors());
+
+                    $view->SetCanBeRetried($validationResult->CanBeRetried());
+                    $view->SetRetryParameters($validationResult->GetRetryParameters());
+                    $view->SetRetryMessages($validationResult->GetRetryMessages());
+                    $view->SetCanJoinWaitList($validationResult->CanJoinWaitList() && Configuration::Instance()->GetKey(
+                        ConfigKeys::RESERVATION_ALLOW_WAITLIST,
+                        new BooleanConverter()
+                    ));
+                }
+
+                $view->SetWarnings($validationResult->GetWarnings());
+
+                return $result;
+
+            } finally {
+                // 4. Libera todas as travas com segurança (mesmo se ocorrer erro ou exceção)
+                while (!empty($lockHandles)) {
+                    $fp = array_pop($lockHandles);
+                    flock($fp, LOCK_UN);
+                    fclose($fp);
+                }
             }
-
-            $this->notificationService->Notify($reservationSeries);
-
-            $view->SetSaveSuccessfulMessage($result);
-        } else {
-            $view->SetSaveSuccessfulMessage($result);
-            $view->SetErrors($validationResult->GetErrors());
-
-            $view->SetCanBeRetried($validationResult->CanBeRetried());
-            $view->SetRetryParameters($validationResult->GetRetryParameters());
-            $view->SetRetryMessages($validationResult->GetRetryMessages());
-            $view->SetCanJoinWaitList($validationResult->CanJoinWaitList() && Configuration::Instance()->GetKey(
-                ConfigKeys::RESERVATION_ALLOW_WAITLIST,
-                new BooleanConverter()
-            ));
         }
 
-        $view->SetWarnings($validationResult->GetWarnings());
 
-        return $result;
-    }
+//     public function Handle($reservationSeries, IReservationSaveResultsView $view)
+//     {
+//         $this->retryOptions->AdjustReservation($reservationSeries, $view->GetRetryParameters());
+//         $validationResult = $this->validationService->Validate($reservationSeries, $view->GetRetryParameters());
+//         $result = $validationResult->CanBeSaved();
+
+//         if ($validationResult->CanBeSaved()) {
+//             try {
+//                 $this->persistenceService->Persist($reservationSeries);
+//             } catch (Exception $ex) {
+//                 Log::Error('Error saving reservation: %s', $ex);
+//                 throw($ex);
+//             }
+
+//             $this->notificationService->Notify($reservationSeries);
+
+//             $view->SetSaveSuccessfulMessage($result);
+//         } else {
+//             $view->SetSaveSuccessfulMessage($result);
+//             $view->SetErrors($validationResult->GetErrors());
+
+//             $view->SetCanBeRetried($validationResult->CanBeRetried());
+//             $view->SetRetryParameters($validationResult->GetRetryParameters());
+//             $view->SetRetryMessages($validationResult->GetRetryMessages());
+//             $view->SetCanJoinWaitList($validationResult->CanJoinWaitList() && Configuration::Instance()->GetKey(
+//                 ConfigKeys::RESERVATION_ALLOW_WAITLIST,
+//                 new BooleanConverter()
+//             ));
+//         }
+
+//         $view->SetWarnings($validationResult->GetWarnings());
+
+//         return $result;
+//     }
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
